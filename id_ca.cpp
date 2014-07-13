@@ -17,8 +17,6 @@ loaded into the data segment
 #include <sys/types.h>
 #if defined _WIN32
     #include <io.h>
-#elif defined _arch_dreamcast
-    #include <unistd.h>
 #else
     #include <sys/uio.h>
     #include <unistd.h>

@@ -390,10 +390,6 @@ US_ControlPanel (ScanCode scancode)
 {
     int which;
 
-#ifdef _arch_dreamcast
-    DC_StatusClearLCD();
-#endif
-
     if (ingame)
     {
         if (CP_CheckQuick (scancode))
@@ -1507,10 +1503,6 @@ CP_LoadGame (int quick)
         {
             name[7] = which + '0';
 
-#ifdef _arch_dreamcast
-            DC_LoadFromVMU(name);
-#endif
-
             if(configdir[0])
                 snprintf(loadpath, sizeof(loadpath), "%s/%s", configdir, name);
             else
@@ -1551,10 +1543,6 @@ CP_LoadGame (int quick)
         {
             ShootSnd ();
             name[7] = which + '0';
-
-#ifdef _arch_dreamcast
-            DC_LoadFromVMU(name);
-#endif
 
             if(configdir[0])
                 snprintf(loadpath, sizeof(loadpath), "%s/%s", configdir, name);
@@ -1715,10 +1703,6 @@ CP_SaveGame (int quick)
             SaveTheGame (file, 0, 0);
             fclose (file);
 
-#ifdef _arch_dreamcast
-            DC_SaveToVMU(name, input);
-#endif
-
             return 1;
         }
     }
@@ -1790,10 +1774,6 @@ CP_SaveGame (int quick)
                 SaveTheGame (file, LSA_X + 8, LSA_Y + 5);
 
                 fclose (file);
-
-#ifdef _arch_dreamcast
-                DC_SaveToVMU(name, input);
-#endif
 
                 ShootSnd ();
                 exit = 1;
@@ -3167,11 +3147,7 @@ void SetupSaveGames()
     for(int i = 0; i < 10; i++)
     {
         name[7] = '0' + i;
-#ifdef _arch_dreamcast
-        // Try to unpack file
-        if(DC_LoadFromVMU(name))
-        {
-#endif
+
             if(configdir[0])
                 snprintf(savepath, sizeof(savepath), "%s/%s", configdir, name);
             else
@@ -3187,11 +3163,7 @@ void SetupSaveGames()
                 close(handle);
                 strcpy(&SaveGameNames[i][0], temp);
             }
-#ifdef _arch_dreamcast
-            // Remove unpacked version of file
-            fs_unlink(name);
-        }
-#endif
+
     }
 }
 
@@ -3990,7 +3962,7 @@ CheckForEpisodes (void)
     struct stat statbuf;
 
     // On Linux like systems, the configdir defaults to $HOME/.wolf4sdl
-#if !defined(_WIN32) && !defined(_arch_dreamcast)
+#if !defined(_WIN32)
     if(configdir[0] == 0)
     {
         // Set config location to home directory for multi-user support

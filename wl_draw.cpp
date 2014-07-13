@@ -989,8 +989,7 @@ void DrawScaleds (void)
         //
         // draw farthest
         //
-
-            ScaleShape(farthest->viewx, farthest->shapenum, farthest->viewheight, farthest->flags);
+        ScaleShape(farthest->viewx, farthest->shapenum, farthest->viewheight, farthest->flags);
 
         farthest->viewheight = 32000;
     }

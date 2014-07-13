@@ -151,13 +151,9 @@ void IN_GetJoyDelta(int *dx,int *dy)
     }
 
     SDL_JoystickUpdate();
-#ifdef _arch_dreamcast
-    int x = 0;
-    int y = 0;
-#else
+
     int x = SDL_JoystickGetAxis(Joystick, 0) >> 8;
     int y = SDL_JoystickGetAxis(Joystick, 1) >> 8;
-#endif
 
     if(param_joystickhat != -1)
     {
@@ -398,8 +394,6 @@ IN_Startup(void)
     // I didn't find a way to ask libSDL whether a mouse is present, yet...
 #if defined(GP2X)
     MousePresent = false;
-#elif defined(_arch_dreamcast)
-    MousePresent = DC_MousePresent();
 #else
     MousePresent = true;
 #endif

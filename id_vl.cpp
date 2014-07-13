@@ -17,26 +17,13 @@
 #endif
 
 boolean fullscreen = true;
-#if defined(_arch_dreamcast)
-boolean usedoublebuffering = false;
-unsigned screenWidth = 320;
-unsigned screenHeight = 200;
-unsigned screenBits = 8;
-#elif defined(GP2X)
-boolean usedoublebuffering = true;
-unsigned screenWidth = 320;
-unsigned screenHeight = 240;
-#if defined(GP2X_940)
-unsigned screenBits = 8;
-#else
-unsigned screenBits = 16;
-#endif
-#else
+
+
 boolean usedoublebuffering = true;
 unsigned screenWidth = 640;
 unsigned screenHeight = 400;
 unsigned screenBits = -1;      // use "best" color depth according to libSDL
-#endif
+
 
 SDL_Surface *screen = NULL;
 unsigned screenPitch;
