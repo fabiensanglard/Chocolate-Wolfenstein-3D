@@ -88,7 +88,6 @@
 		D901F4E70FC0DBCB0040C290 /* wl_text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wl_text.cpp; path = ../wl_text.cpp; sourceTree = SOURCE_ROOT; };
 		D901F4E80FC0DBCB0040C290 /* id_sd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = id_sd.h; path = ../id_sd.h; sourceTree = SOURCE_ROOT; };
 		D901F4E90FC0DBCB0040C290 /* id_sd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = id_sd.cpp; path = ../id_sd.cpp; sourceTree = SOURCE_ROOT; };
-		D901F4EA0FC0DBCB0040C290 /* gp2x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gp2x.h; path = ../gp2x.h; sourceTree = SOURCE_ROOT; };
 		D901F4EB0FC0DBCB0040C290 /* wl_state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wl_state.cpp; path = ../wl_state.cpp; sourceTree = SOURCE_ROOT; };
 		D901F4EE0FC0DBCB0040C290 /* wl_play.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wl_play.cpp; path = ../wl_play.cpp; sourceTree = SOURCE_ROOT; };
 		D901F4F00FC0DBCB0040C290 /* wl_menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wl_menu.h; path = ../wl_menu.h; sourceTree = SOURCE_ROOT; };
@@ -196,7 +195,6 @@
 				D901F4E70FC0DBCB0040C290 /* wl_text.cpp */,
 				D901F4E80FC0DBCB0040C290 /* id_sd.h */,
 				D901F4E90FC0DBCB0040C290 /* id_sd.cpp */,
-				D901F4EA0FC0DBCB0040C290 /* gp2x.h */,
 				D901F4EB0FC0DBCB0040C290 /* wl_state.cpp */,
 				D901F4EE0FC0DBCB0040C290 /* wl_play.cpp */,
 				D901F4F00FC0DBCB0040C290 /* wl_menu.h */,

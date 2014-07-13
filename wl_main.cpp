@@ -664,9 +664,6 @@ void ShutdownId (void)
     IN_Shutdown ();
     VW_Shutdown ();
     CA_Shutdown ();
-#if defined(GP2X_940)
-    GP2X_Shutdown();
-#endif
 }
 
 
@@ -1208,10 +1205,6 @@ static void InitGame()
             printf("The joystick index must be between -1 and %i!\n", numJoysticks - 1);
         exit(1);
     }
-
-#if defined(GP2X_940)
-    GP2X_MemoryInit();
-#endif
 
     SignonScreen ();
 
