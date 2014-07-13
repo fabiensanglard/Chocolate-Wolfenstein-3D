@@ -3,9 +3,6 @@
 #include "wl_def.h"
 #pragma hdrstop
 
-#include "wl_cloudsky.h"
-#include "wl_atmos.h"
-#include "wl_shade.h"
 
 /*
 =============================================================================
@@ -253,11 +250,17 @@ boolean TransformTile (int tx, int ty, short *dispx, short *dispheight)
 
 int CalcHeight()
 {
-    fixed z = FixedMul(xintercept - viewx, viewcos)
-        - FixedMul(yintercept - viewy, viewsin);
-    if(z < MINDIST) z = MINDIST;
+    fixed z = FixedMul(xintercept - viewx, viewcos) - FixedMul(yintercept - viewy, viewsin);
+    
+    
+    if(z < MINDIST)
+        z = MINDIST;
+    
     int height = heightnumerator / (z >> 8);
-    if(height < min_wallheight) min_wallheight = height;
+    
+    if(height < min_wallheight)
+        min_wallheight = height;
+    
     return height;
 }
 
@@ -277,12 +280,11 @@ int postwidth;
 
 void ScalePost()
 {
+
     int ywcount, yoffs, yw, yd, yendoffs;
     byte col;
 
-#ifdef USE_SHADING
-    byte *curshades = shadetable[GetShade(wallheight[postx])];
-#endif
+
 
     ywcount = yd = wallheight[postx] >> 3;
     if(yd <= 0) yd = 100;
@@ -306,11 +308,8 @@ void ScalePost()
     }
     if(yw < 0) return;
 
-#ifdef USE_SHADING
-    col = curshades[postsource[yw]];
-#else
     col = postsource[yw];
-#endif
+
     yendoffs = yendoffs * vbufPitch + postx;
     while(yoffs <= yendoffs)
     {
@@ -325,11 +324,7 @@ void ScalePost()
             }
             while(ywcount <= 0);
             if(yw < 0) break;
-#ifdef USE_SHADING
-            col = curshades[postsource[yw]];
-#else
             col = postsource[yw];
-#endif
         }
         yendoffs -= vbufPitch;
     }
@@ -639,17 +634,13 @@ void VGAClearScreen (void)
 
     int y;
     byte *ptr = vbuf;
-#ifdef USE_SHADING
-    for(y = 0; y < viewheight / 2; y++, ptr += vbufPitch)
-        memset(ptr, shadetable[GetShade((viewheight / 2 - y) << 3)][ceiling], viewwidth);
-    for(; y < viewheight; y++, ptr += vbufPitch)
-        memset(ptr, shadetable[GetShade((y - viewheight / 2) << 3)][0x19], viewwidth);
-#else
+    
     for(y = 0; y < viewheight / 2; y++, ptr += vbufPitch)
         memset(ptr, ceiling, viewwidth);
+    
     for(; y < viewheight; y++, ptr += vbufPitch)
         memset(ptr, 0x19, viewwidth);
-#endif
+    
 }
 
 //==========================================================================
@@ -703,13 +694,7 @@ void ScaleShape (int xcenter, int shapenum, unsigned height, uint32_t flags)
     unsigned j;
     byte col;
 
-#ifdef USE_SHADING
-    byte *curshades;
-    if(flags & FL_FULLBRIGHT)
-        curshades = shadetable[0];
-    else
-        curshades = shadetable[GetShade(height)];
-#endif
+
 
     shape = (t_compshape *) PM_GetSprite(shapenum);
 
@@ -725,14 +710,23 @@ void ScaleShape (int xcenter, int shapenum, unsigned height, uint32_t flags)
     for(i=shape->leftpix,pixcnt=i*pixheight,rpix=(pixcnt>>6)+actx;i<=shape->rightpix;i++,cmdptr++)
     {
         lpix=rpix;
-        if(lpix>=viewwidth) break;
+        
+        if(lpix>=viewwidth)
+            break;
+        
         pixcnt+=pixheight;
         rpix=(pixcnt>>6)+actx;
+        
         if(lpix!=rpix && rpix>0)
         {
-            if(lpix<0) lpix=0;
-            if(rpix>viewwidth) rpix=viewwidth,i=shape->rightpix+1;
+            if(lpix<0)
+                lpix=0;
+            
+            if(rpix>viewwidth)
+                rpix=viewwidth,i=shape->rightpix+1;
+            
             cline=(byte *)shape + *cmdptr;
+            
             while(lpix<rpix)
             {
                 if(wallheight[lpix]<=(int)height)
@@ -746,8 +740,12 @@ void ScaleShape (int xcenter, int shapenum, unsigned height, uint32_t flags)
                         j=starty;
                         ycnt=j*pixheight;
                         screndy=(ycnt>>6)+upperedge;
-                        if(screndy<0) vmem=vbuf+lpix;
-                        else vmem=vbuf+screndy*vbufPitch+lpix;
+                        
+                        if(screndy<0)
+                            vmem=vbuf+lpix;
+                        else
+                            vmem=vbuf+screndy*vbufPitch+lpix;
+                        
                         for(;j<endy;j++)
                         {
                             scrstarty=screndy;
@@ -755,13 +753,13 @@ void ScaleShape (int xcenter, int shapenum, unsigned height, uint32_t flags)
                             screndy=(ycnt>>6)+upperedge;
                             if(scrstarty!=screndy && screndy>0)
                             {
-#ifdef USE_SHADING
-                                col=curshades[((byte *)shape)[newstart+j]];
-#else
                                 col=((byte *)shape)[newstart+j];
-#endif
-                                if(scrstarty<0) scrstarty=0;
-                                if(screndy>viewheight) screndy=viewheight,j=endy;
+
+                                if(scrstarty<0)
+                                    scrstarty=0;
+                                
+                                if(screndy>viewheight)
+                                    screndy=viewheight,j=endy;
 
                                 while(scrstarty<screndy)
                                 {
@@ -872,9 +870,6 @@ typedef struct
                shapenum;
     short      flags;          // this must be changed to uint32_t, when you
                                // you need more than 16-flags for drawing
-#ifdef USE_DIR3DSPR
-    statobj_t *transsprite;
-#endif
 } visobj_t;
 
 visobj_t vislist[MAXVISABLE];
@@ -912,13 +907,6 @@ void DrawScaleds (void)
 
         if (!visptr->viewheight)
             continue;                                               // to close to the object
-
-#ifdef USE_DIR3DSPR
-        if(statptr->flags & FL_DIR_MASK)
-            visptr->transsprite=statptr;
-        else
-            visptr->transsprite=NULL;
-#endif
 
         if (visptr < &vislist[MAXVISABLE-1])    // don't let it overflow
         {
@@ -968,9 +956,7 @@ void DrawScaleds (void)
             if (visptr < &vislist[MAXVISABLE-1])    // don't let it overflow
             {
                 visptr->flags = (short) obj->flags;
-#ifdef USE_DIR3DSPR
-                visptr->transsprite = NULL;
-#endif
+                
                 visptr++;
             }
             obj->flags |= FL_VISABLE;
@@ -982,6 +968,7 @@ void DrawScaleds (void)
 //
 // draw from back to front
 //
+    
     numvisable = (int) (visptr-&vislist[0]);
 
     if (!numvisable)
@@ -1002,11 +989,7 @@ void DrawScaleds (void)
         //
         // draw farthest
         //
-#ifdef USE_DIR3DSPR
-        if(farthest->transsprite)
-            Scale3DShape(vbuf, vbufPitch, farthest->transsprite);
-        else
-#endif
+
             ScaleShape(farthest->viewx, farthest->shapenum, farthest->viewheight, farthest->flags);
 
         farthest->viewheight = 32000;
@@ -1520,9 +1503,11 @@ void WallRefresh (void)
 void CalcViewVariables()
 {
     viewangle = player->angle;
+    //printf("\nvieangle=%d\n",viewangle);
     midangle = viewangle*(FINEANGLES/ANGLES);
     viewsin = sintable[viewangle];
     viewcos = costable[viewangle];
+    //printf("%d\n",viewcos);
     viewx = player->x - FixedMul(focallength,viewcos);
     viewy = player->y + FixedMul(focallength,viewsin);
 
@@ -1561,38 +1546,17 @@ void    ThreeDRefresh (void)
 // follow the walls from there to the right, drawing as we go
 //
     VGAClearScreen ();
-#if defined(USE_FEATUREFLAGS) && defined(USE_STARSKY)
-    if(GetFeatureFlags() & FF_STARSKY)
-        DrawStarSky(vbuf, vbufPitch);
-#endif
 
     WallRefresh ();
 
-#if defined(USE_FEATUREFLAGS) && defined(USE_PARALLAX)
-    if(GetFeatureFlags() & FF_PARALLAXSKY)
-        DrawParallax(vbuf, vbufPitch);
-#endif
-#if defined(USE_FEATUREFLAGS) && defined(USE_CLOUDSKY)
-    if(GetFeatureFlags() & FF_CLOUDSKY)
-        DrawClouds(vbuf, vbufPitch, min_wallheight);
-#endif
-#ifdef USE_FLOORCEILINGTEX
-    DrawFloorAndCeiling(vbuf, vbufPitch, min_wallheight);
-#endif
+    
 
 //
 // draw all the scaled images
 //
+    
     DrawScaleds();                  // draw scaled stuff
 
-#if defined(USE_FEATUREFLAGS) && defined(USE_RAIN)
-    if(GetFeatureFlags() & FF_RAIN)
-        DrawRain(vbuf, vbufPitch);
-#endif
-#if defined(USE_FEATUREFLAGS) && defined(USE_SNOW)
-    if(GetFeatureFlags() & FF_SNOW)
-        DrawSnow(vbuf, vbufPitch);
-#endif
 
     DrawPlayerWeapon ();    // draw player's hands
 

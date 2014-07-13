@@ -28,7 +28,7 @@
 //
 
 #include "wl_def.h"
-#include <SDL_mixer.h>
+#include <SDL/SDL_mixer.h>
 #if defined(GP2X_940)
 #include "gp2x/fmopl.h"
 #else
@@ -97,9 +97,9 @@ static  digiinfo               *DigiList;
 static  boolean                 DigiPlaying;
 
 //      PC Sound variables
-static  volatile byte           pcLastSample;
+
 static  byte * volatile         pcSound;
-static  longword                pcLengthLeft;
+
 
 //      AdLib variables
 static  byte * volatile         alSound;

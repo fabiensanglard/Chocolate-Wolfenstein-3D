@@ -8,8 +8,8 @@
 
 #include "wl_def.h"
 #pragma hdrstop
-#include "wl_atmos.h"
-#include <SDL_syswm.h>
+
+
 
 
 /*
@@ -36,6 +36,7 @@ extern byte signon[];
 
 
 #define FOCALLENGTH     (0x5700l)               // in global coordinates
+//#define FOCALLENGTH     (0x0200l)               // in global coordinates
 #define VIEWGLOBAL      0x10000                 // globals visable flush to wall
 
 #define VIEWWIDTH       256                     // size of view window
@@ -558,6 +559,7 @@ boolean LoadTheGame(FILE *file,int x,int y)
     fread (player,sizeof(*player),1,file);
     player->state=(statetype *) ((uintptr_t)player->state+(uintptr_t)&s_player);
 
+    //Load all actors ?
     while (1)
     {
         DiskFlopAnim(x,y);
@@ -734,9 +736,6 @@ void BuildTables (void)
     sintable[ANGLEQUAD] = 65536;
     sintable[3*ANGLEQUAD] = -65536;
 
-#if defined(USE_STARSKY) || defined(USE_RAIN) || defined(USE_SNOW)
-    Init3DPoints();
-#endif
 }
 
 //===========================================================================

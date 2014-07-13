@@ -3,8 +3,6 @@
 #include "wl_def.h"
 #pragma hdrstop
 
-#include "wl_cloudsky.h"
-#include "wl_shade.h"
 
 /*
 =============================================================================
@@ -688,8 +686,6 @@ void CheckKeys (void)
 #endif
            scan == sc_F9 || scan == sc_F7 || scan == sc_F8)     // pop up quit dialog
     {
-        short oldmapon = gamestate.mapon;
-        short oldepisode = gamestate.episode;
         ClearMemory ();
         ClearSplitVWB ();
         US_ControlPanel (scan);
@@ -1261,14 +1257,6 @@ int32_t funnyticount;
 
 void PlayLoop (void)
 {
-#if defined(USE_FEATUREFLAGS) && defined(USE_CLOUDSKY)
-    if(GetFeatureFlags() & FF_CLOUDSKY)
-        InitSky();
-#endif
-
-#ifdef USE_SHADING
-    InitLevelShadeTable();
-#endif
 
     playstate = ex_stillplaying;
     lasttimecount = GetTimeCount();

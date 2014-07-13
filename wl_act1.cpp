@@ -112,12 +112,7 @@ struct
     #endif
 
     {SPR_STAT_26,bo_clip2},                 // Clip            "
-#ifdef USE_DIR3DSPR
-    // These are just two examples showing the new way of using dir 3d sprites.
-    // You can find the allowed values in the objflag_t enum in wl_def.h.
-    {SPR_STAT_47,none,FL_DIR_VERT_MID},
-    {SPR_STAT_47,block,FL_DIR_HORIZ_MID},
-#endif
+
     {-1}                                    // terminator
 };
 

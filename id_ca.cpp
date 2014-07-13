@@ -87,7 +87,7 @@ static const char gheadname[] = "vgahead.";
 static const char gfilename[] = "vgagraph.";
 static const char gdictname[] = "vgadict.";
 static const char mheadname[] = "maphead.";
-static const char mfilename[] = "maptemp.";
+
 static const char aheadname[] = "audiohed.";
 static const char afilename[] = "audiot.";
 
