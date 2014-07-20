@@ -1589,6 +1589,7 @@ void    ThreeDRefresh (void)
             US_Print(" fps");
         }
 #endif
+        
         SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
         SDL_Flip(screen);
     }

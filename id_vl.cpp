@@ -20,8 +20,8 @@ boolean fullscreen = true;
 
 
 boolean usedoublebuffering = true;
-unsigned screenWidth = 640;
-unsigned screenHeight = 400;
+unsigned screenWidth = 320;
+unsigned screenHeight = 200;
 unsigned screenBits = -1;      // use "best" color depth according to libSDL
 
 
@@ -129,7 +129,8 @@ void	VL_SetVGAPlaneMode (void)
 
     scaleFactor = screenWidth/320;
     if(screenHeight/200 < scaleFactor) scaleFactor = screenHeight/200;
-
+    
+    
     pixelangle = (short *) malloc(screenWidth * sizeof(short));
     CHECKMALLOCRESULT(pixelangle);
     wallheight = (int *) malloc(screenWidth * sizeof(int));
@@ -207,7 +208,7 @@ void VL_SetColor	(int color, int red, int green, int blue)
     else
     {
         SDL_SetPalette(curSurface, SDL_LOGPAL, &col, color, 1);
-        SDL_BlitSurface(curSurface, NULL, screen, NULL);
+        SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
         SDL_Flip(screen);
     }
 }
@@ -251,7 +252,7 @@ void VL_SetPalette (SDL_Color *palette, bool forceupdate)
         SDL_SetPalette(curSurface, SDL_LOGPAL, palette, 0, 256);
         if(forceupdate)
         {
-            SDL_BlitSurface(curSurface, NULL, screen, NULL);
+            SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
             SDL_Flip(screen);
         }
     }

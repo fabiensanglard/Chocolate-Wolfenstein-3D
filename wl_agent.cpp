@@ -985,9 +985,12 @@ void VictoryTile (void)
 static fixed FixedByFracOrig(fixed a, fixed b)
 {
     int sign = 0;
-    if(b == 65536) b = 65535;
-    else if(b == -65536) b = 65535, sign = 1;
-    else if(b < 0) b = (-b), sign = 1;
+    if(b == 65536)
+        b = 65535;
+    else
+        if(b == -65536) b = 65535, sign = 1;
+    else
+        if(b < 0) b = (-b), sign = 1;
 
     if(a < 0)
     {
@@ -995,6 +998,7 @@ static fixed FixedByFracOrig(fixed a, fixed b)
         sign = !sign;
     }
     fixed res = (fixed)(((int64_t) a * b) >> 16);
+    
     if(sign)
         res = -res;
     return res;
