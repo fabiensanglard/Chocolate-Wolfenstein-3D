@@ -11,11 +11,12 @@ Chocolate Wolf3D removes all the crap that was added over the years
 All other port display the framebuffer as 320x200 without accounting for the CRT 4:3
 distortion. Chocolate Wolfenstien 3D has a CRT emulator based on OpenGL:
 
-Most port just display the framebuffer as is: 320x200:
+Direct framebuffer to window (resulting in compressed image):
 
 ![alt tag](https://github.com/fabiensanglard/Chocolate-Wolfenstein-3D/blob/master/screenshots/crt_framebuffer.png)
 
-But back in 1993, the CRT were 4:3 aspect ratio. Which mean image were streched to 320x240:
+CRT 4:3 aspect ratio emulated to match what gamer saw on their screen in 1993. Image is streched to 320x240 just
+like the CRT did :
 
 ![alt tag](https://github.com/fabiensanglard/Chocolate-Wolfenstein-3D/blob/master/screenshots/crt_aspect.png)
 
