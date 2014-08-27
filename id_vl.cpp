@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include "wl_def.h"
+#include "crt.h"
 #pragma hdrstop
 
 // Uncomment the following line, if you get destination out of bounds
@@ -95,15 +96,19 @@ void	VL_SetVGAPlaneMode (void)
         screenBits = vidInfo->vfmt->BitsPerPixel;
     }
 
+    //Fab's CRT Hack
+    screenWidth=640;
+    screenHeight=480;
+    
     screen = SDL_SetVideoMode(screenWidth, screenHeight, screenBits,
           (usedoublebuffering ? SDL_HWSURFACE | SDL_DOUBLEBUF : 0)
         | (screenBits == 8 ? SDL_HWPALETTE : 0)
-        | (fullscreen ? SDL_FULLSCREEN : 0));
+        | (fullscreen ? SDL_FULLSCREEN : 0) | SDL_OPENGL | SDL_OPENGLBLIT);
+    
     
     if(!screen)
     {
-        printf("Unable to set %ix%ix%i video mode: %s\n", screenWidth,
-            screenHeight, screenBits, SDL_GetError());
+        printf("Unable to set %ix%ix%i video mode: %s\n", screenWidth, screenHeight, screenBits, SDL_GetError());
         exit(1);
     }
     if((screen->flags & SDL_DOUBLEBUF) != SDL_DOUBLEBUF)
@@ -113,6 +118,13 @@ void	VL_SetVGAPlaneMode (void)
     SDL_SetColors(screen, gamepal, 0, 256);
     memcpy(curpal, gamepal, sizeof(SDL_Color) * 256);
 
+    //Fab's CRT Hack
+    CRT_Init(screenWidth);
+    
+    //Fab's CRT Hack
+    screenWidth=320;
+    screenHeight=200;
+    
     screenBuffer = SDL_CreateRGBSurface(SDL_SWSURFACE, screenWidth,
         screenHeight, 8, 0, 0, 0, 0);
     if(!screenBuffer)
@@ -136,6 +148,8 @@ void	VL_SetVGAPlaneMode (void)
     CHECKMALLOCRESULT(pixelangle);
     wallheight = (int *) malloc(screenWidth * sizeof(int));
     CHECKMALLOCRESULT(wallheight);
+    
+    
 }
 
 /*

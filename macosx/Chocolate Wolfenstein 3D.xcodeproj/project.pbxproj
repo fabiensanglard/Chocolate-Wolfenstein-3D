@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		002F3A2E09D0888800EBEB88 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 002F3A2C09D0888800EBEB88 /* SDLMain.m */; };
+		2DE6049019AD760F008724EB /* crt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DE6048F19AD760F008724EB /* crt.cpp */; };
+		2DE6049319AD7921008724EB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE6049219AD7921008724EB /* OpenGL.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D901F4FD0FC0DBCB0040C290 /* fmopl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4CB0FC0DBCB0040C290 /* fmopl.cpp */; };
@@ -57,6 +59,9 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2DE6048F19AD760F008724EB /* crt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = crt.cpp; path = ../crt.cpp; sourceTree = "<group>"; };
+		2DE6049119AD761B008724EB /* crt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = crt.h; path = ../crt.h; sourceTree = "<group>"; };
+		2DE6049219AD7921008724EB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chocolate Wolfenstein 3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chocolate Wolfenstein 3D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D901F4C10FC0DB520040C290 /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
@@ -109,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DE6049319AD7921008724EB /* OpenGL.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +161,7 @@
 		29B97314FDCFA39411CA2CEA /* Untitled */ = {
 			isa = PBXGroup;
 			children = (
+				2DE6048C19AD75C9008724EB /* CRT Emulator */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -225,10 +232,20 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2DE6049219AD7921008724EB /* OpenGL.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DE6048C19AD75C9008724EB /* CRT Emulator */ = {
+			isa = PBXGroup;
+			children = (
+				2DE6049119AD761B008724EB /* crt.h */,
+				2DE6048F19AD760F008724EB /* crt.cpp */,
+			);
+			name = "CRT Emulator";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,6 +336,7 @@
 				D901F5160FC0DBCB0040C290 /* id_in.cpp in Sources */,
 				D901F5170FC0DBCB0040C290 /* id_vl.cpp in Sources */,
 				D901F51A0FC0DBCB0040C290 /* id_vh.cpp in Sources */,
+				2DE6049019AD760F008724EB /* crt.cpp in Sources */,
 				D901F51B0FC0DBCB0040C290 /* id_ca.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
