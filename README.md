@@ -12,11 +12,11 @@ distortion. Chocolate Wolfenstien 3D has a CRT emulator based on OpenGL:
 
 Most port just display the framebuffer as is: 320x200:
 
-![alt tag](https://github.com/fabiensanglard/Chocolate-Wolfenstein-3D/blob/master/screenshots/ctr_framebuffer.png)
+![alt tag](https://github.com/fabiensanglard/Chocolate-Wolfenstein-3D/blob/master/screenshots/crt_framebuffer.png)
 
 But back in 1993, the CRT were 4:3 aspect ratio. Which mean image were streched to 320x240:
 
-![alt tag](https://github.com/fabiensanglard/Chocolate-Wolfenstein-3D/blob/master/screenshots/ctr_aspect.png)
+![alt tag](https://github.com/fabiensanglard/Chocolate-Wolfenstein-3D/blob/master/screenshots/crt_aspect.png)
 
 Tested on Mac OS X. If anybody wants to make a Windows and Linux build, you are welcome.
 
