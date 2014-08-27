@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BD796D4D-59B7-447F-A690-B41CCDA0E2A1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Wolf4SDL</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>ADB16B6E-8FC4-4159-ADC0-3085AFA729A4</key>
+		<string>ssh://github.com/mozzwald/wolf4sdl.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>macosx/Wolf4SDL.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>ADB16B6E-8FC4-4159-ADC0-3085AFA729A4</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/mozzwald/wolf4sdl.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>ADB16B6E-8FC4-4159-ADC0-3085AFA729A4</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ADB16B6E-8FC4-4159-ADC0-3085AFA729A4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>wolf4sdl</string>
+		</dict>
+	</array>
+</dict>
+</plist>
