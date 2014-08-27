@@ -21,8 +21,8 @@ boolean fullscreen = true;
 
 
 boolean usedoublebuffering = true;
-unsigned screenWidth = 320;
-unsigned screenHeight = 200;
+unsigned screenWidth = 640;
+unsigned screenHeight = 480;
 unsigned screenBits = -1;      // use "best" color depth according to libSDL
 
 
@@ -97,8 +97,8 @@ void	VL_SetVGAPlaneMode (void)
     }
 
     //Fab's CRT Hack
-    screenWidth=640;
-    screenHeight=480;
+    //Adjust height so the screen is 4:3 aspect ratio
+    screenHeight=screenWidth * 3.0/4.0;
     
     screen = SDL_SetVideoMode(screenWidth, screenHeight, screenBits,
           (usedoublebuffering ? SDL_HWSURFACE | SDL_DOUBLEBUF : 0)
