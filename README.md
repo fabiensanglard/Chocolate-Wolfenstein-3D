@@ -5,7 +5,7 @@ Based on Wolf4SDL by Moritz "Ripper" Kroll (http://www.chaos-software.de.vu).
 
 Original Wolfenstein 3D by id Software (http://www.idsoftware.com)
 
-Based on Wolf4SDL, Chocolate Wolf3D removes all the crap that was added over the years 
+Chocolate Wolf3D removes all the crap that was added over the years 
 (snow, rain ...) in order to recreate the experience from 1993. 
 
 All other port display the framebuffer as 320x200 without accounting for the CRT 4:3
