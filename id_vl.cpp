@@ -99,6 +99,7 @@ void	VL_SetVGAPlaneMode (void)
           (usedoublebuffering ? SDL_HWSURFACE | SDL_DOUBLEBUF : 0)
         | (screenBits == 8 ? SDL_HWPALETTE : 0)
         | (fullscreen ? SDL_FULLSCREEN : 0));
+    
     if(!screen)
     {
         printf("Unable to set %ix%ix%i video mode: %s\n", screenWidth,

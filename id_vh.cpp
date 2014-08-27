@@ -231,6 +231,7 @@ void LoadLatchMem (void)
 //
 // tile 8s
 //
+    
     surf = SDL_CreateRGBSurface(SDL_HWSURFACE, 8*8,
         ((NUMTILE8 + 7) / 8) * 8, 8, 0, 0, 0, 0);
     if(surf == NULL)
@@ -340,6 +341,7 @@ void VH_Startup()
 boolean FizzleFade (SDL_Surface *source, int x1, int y1,
     unsigned width, unsigned height, unsigned frames, boolean abortable)
 {
+
     unsigned x, y, frame, pixperframe;
     int32_t  rndval, lastrndval;
     int      first = 1;

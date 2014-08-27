@@ -69,7 +69,7 @@ void			US_TextScreen(void),
 				US_UpdateTextScreen(void),
 				US_FinishTextScreen(void);
 void			US_DrawWindow(word x,word y,word w,word h);
-void			US_CenterWindow(word,word);
+
 void			US_SaveWindow(WindowRec *win),
 				US_RestoreWindow(WindowRec *win);
 void 			US_ClearWindow(void);

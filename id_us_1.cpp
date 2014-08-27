@@ -347,6 +347,7 @@ US_ClearWindow(void)
 void
 US_DrawWindow(word x,word y,word w,word h)
 {
+   
 	word	i,
 			sx,sy,sw,sh;
 
@@ -372,18 +373,6 @@ US_DrawWindow(word x,word y,word w,word h)
 
 	for (i = sy + 8;i <= sy + sh - 8;i += 8)
 		VWB_DrawTile8(sx,i,3),VWB_DrawTile8(sx + sw,i,4);
-}
-
-///////////////////////////////////////////////////////////////////////////
-//
-//	US_CenterWindow() - Generates a window of a given width & height in the
-//		middle of the screen
-//
-///////////////////////////////////////////////////////////////////////////
-void
-US_CenterWindow(word w,word h)
-{
-	US_DrawWindow(((MaxX / 8) - w) / 2,((MaxY / 8) - h) / 2,w,h);
 }
 
 ///////////////////////////////////////////////////////////////////////////

@@ -149,13 +149,6 @@ SetSoundLoc(fixed gx,fixed gy)
     leftchannel  =  lefttable[x][y + ATABLEMAX];
     rightchannel = righttable[x][y + ATABLEMAX];
 
-#if 0
-    CenterWindow(8,1);
-    US_PrintSigned(leftchannel);
-    US_Print(",");
-    US_PrintSigned(rightchannel);
-    VW_UpdateScreen();
-#endif
 }
 
 /*

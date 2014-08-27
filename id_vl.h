@@ -75,8 +75,7 @@ void VL_MemToScreenScaledCoord  (byte *source, int origwidth, int origheight, in
 
 void inline VL_MemToScreen (byte *source, int width, int height, int x, int y)
 {
-    VL_MemToScreenScaledCoord(source, width, height,
-        scaleFactor*x, scaleFactor*y);
+    VL_MemToScreenScaledCoord(source, width, height, scaleFactor*x, scaleFactor*y);
 }
 
 void VL_MaskedToScreen (byte *source, int width, int height, int x, int y);
