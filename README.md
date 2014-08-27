@@ -1,7 +1,8 @@
 Chocolate-Wolfenstein-3D
 ========================
 
-Wolf4SDL by Moritz "Ripper" Kroll (http://www.chaos-software.de.vu)
+Based on Wolf4SDL by Moritz "Ripper" Kroll (http://www.chaos-software.de.vu).
+
 Original Wolfenstein 3D by id Software (http://www.idsoftware.com)
 
 Based on Wolf4SDL, Chocolate Wolf3D removes all the crap that was added over the years 
