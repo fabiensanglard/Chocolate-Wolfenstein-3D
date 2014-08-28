@@ -26,7 +26,6 @@ CFLAGS += -Wreturn-type
 CFLAGS += -Wwrite-strings
 CFLAGS += -Wcast-align
 
-
 CCFLAGS += $(CFLAGS)
 CCFLAGS += -std=gnu99
 CCFLAGS += -Werror-implicit-function-declaration
@@ -36,7 +35,7 @@ CCFLAGS += -Wsequence-point
 CXXFLAGS += $(CFLAGS)
 
 LDFLAGS += $(LDFLAGS_SDL)
-LDFLAGS += -lSDL_mixer
+LDFLAGS += -lSDL_mixer -lGL
 
 SRCS :=
 SRCS += fmopl.cpp
@@ -51,19 +50,16 @@ SRCS += signon.cpp
 SRCS += wl_act1.cpp
 SRCS += wl_act2.cpp
 SRCS += wl_agent.cpp
-SRCS += wl_atmos.cpp
-SRCS += wl_cloudsky.cpp
 SRCS += wl_debug.cpp
 SRCS += wl_draw.cpp
-SRCS += wl_floorceiling.cpp
 SRCS += wl_game.cpp
 SRCS += wl_inter.cpp
 SRCS += wl_main.cpp
 SRCS += wl_menu.cpp
-SRCS += wl_parallax.cpp
 SRCS += wl_play.cpp
 SRCS += wl_state.cpp
 SRCS += wl_text.cpp
+SRCS += crt.cpp
 
 DEPS = $(filter %.d, $(SRCS:.c=.d) $(SRCS:.cpp=.d))
 OBJS = $(filter %.o, $(SRCS:.c=.o) $(SRCS:.cpp=.o))
