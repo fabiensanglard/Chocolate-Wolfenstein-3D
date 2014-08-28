@@ -24,7 +24,7 @@ void CRT_Init(int width);
 /*
  *   Trigger the Digital To Analogic convertion
  */
-void CRT_DAC();
+void CRT_DAC(void);
 
 
 #endif

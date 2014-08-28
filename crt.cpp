@@ -52,7 +52,7 @@ void CRT_Init(int _width){
 }
 
 #include "id_vl.h"
-void CRT_DAC(){
+void CRT_DAC(void){
     
     // Grab the color from SDL
     // Gab the pallete from SDL
