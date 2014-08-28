@@ -20,7 +20,7 @@ void CRT_Init(int _width){
     width  = _width;
     height = _width * 3.0/4.0;
     
-    //Alloc the OpenGL texture were
+    //Alloc the OpenGL texture where the screen will be uploaded each frame.
     glGenTextures(1, &crtTexture);
     glBindTexture(GL_TEXTURE_2D, crtTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -29,8 +29,8 @@ void CRT_Init(int _width){
                  GL_TEXTURE_2D,         // target
                  0,                     // level, 0 = base, no minimap,
                  GL_RGB,                // internalformat
-                 320,     // width
-                 200,    // height
+                 320,                   // width
+                 200,                   // height
                  0,                     // border, always 0 in OpenGL ES
                  GL_RGB,                // format
                  GL_UNSIGNED_BYTE,      // type
@@ -53,13 +53,10 @@ void CRT_Init(int _width){
 
 #include "id_vl.h"
 void CRT_DAC(void){
-    
-    // Grab the color from SDL
-    // Gab the pallete from SDL
-    // SDL_Color gamepal
-    
+    // Grab the screen framebuffer from SDL
     SDL_Surface *screen = screenBuffer ;
     
+    //Convert palette based framebuffer to RGB for OpenGL
     byte* pixelPointer = coloredFrameBuffer;
     for (int i=0; i < 320*200; i++) {
         unsigned char paletteIndex;
