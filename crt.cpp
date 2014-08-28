@@ -52,13 +52,13 @@ void CRT_Init(int _width){
 }
 
 #include "id_vl.h"
-void CRT_DAC(SDL_Surface *screen){
+void CRT_DAC(){
     
     // Grab the color from SDL
     // Gab the pallete from SDL
     // SDL_Color gamepal
     
-    screen = screenBuffer ;
+    SDL_Surface *screen = screenBuffer ;
     
     byte* pixelPointer = coloredFrameBuffer;
     for (int i=0; i < 320*200; i++) {
@@ -81,14 +81,7 @@ void CRT_DAC(SDL_Surface *screen){
                     GL_UNSIGNED_BYTE,
                     coloredFrameBuffer);
     
-    glClearColor((SDL_GetTicks() & 0xFF0000 >> 16) /255.0f,
-                 (SDL_GetTicks() & 0x00FF00 >>  8) /255.0f,
-                 (SDL_GetTicks() & 0x0000FF >>  0) /255.0f, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    
     //Draw a quad with the texture
-    
     glBegin(GL_QUADS);
         glTexCoord2f(0, 1); glVertex3i(0,0,0);
         glTexCoord2f(0, 0); glVertex3i(0,height,0);

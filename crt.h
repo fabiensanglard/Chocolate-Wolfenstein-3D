@@ -20,7 +20,7 @@ void CRT_Init(int width);
 /*
  *   Trigger the Digital To Analogic convertion
  */
-void CRT_DAC(SDL_Surface *screen);
+void CRT_DAC();
 
 
 #endif
