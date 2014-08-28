@@ -10,7 +10,11 @@
 #define Chocolate_Wolfenstein_3D_crt_h
 
 #include "SDL/SDL.h"
+#ifdef __linux__
+#include <GL/gl.h>
+#else
 #include <OpenGL/gl.h>
+#endif
 
 /*
  * CRT aspect ratio is 4:3, height will be infered.
