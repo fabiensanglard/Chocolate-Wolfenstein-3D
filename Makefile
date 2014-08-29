@@ -5,6 +5,7 @@ CONFIG ?= config.default
 BINARY    ?= wolf3d
 PREFIX    ?= /usr/local
 MANPREFIX ?= $(PREFIX)
+UNAME := $(shell uname -s)
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= $(INSTALL) -m 555 -s
@@ -35,7 +36,12 @@ CCFLAGS += -Wsequence-point
 CXXFLAGS += $(CFLAGS)
 
 LDFLAGS += $(LDFLAGS_SDL)
-LDFLAGS += -lSDL_mixer -lGL
+ifeq ($(UNAME), Darwin)
+	LDFLAGS += -lSDL_mixer -framework OpenGL
+endif
+ifeq ($(UNAME), Linux)
+	LDFLAGS += -lSDL_mixer -lGL
+endif
 
 SRCS :=
 SRCS += fmopl.cpp
