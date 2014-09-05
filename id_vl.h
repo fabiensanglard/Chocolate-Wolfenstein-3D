@@ -2,11 +2,8 @@
 
 // wolf compatability
 
-// Win32
-//#ifndef ID_VL.H 
-//#define ID_VL.H
-#ifndef ID_VL_H 
-#define ID_VL_H
+#ifndef ID_VL.H 
+#define ID_VL.H
 
 #include "wl_def.h"
 
