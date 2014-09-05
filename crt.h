@@ -10,7 +10,11 @@
 #define Chocolate_Wolfenstein_3D_crt_h
 
 #include "SDL/SDL.h"
-#ifdef __linux__
+// Win32
+#ifdef _WIN32
+#include <WTypes.h>
+#include <gl\GL.h>
+#elif __linux__
 #include <GL/gl.h>
 #else
 #include <OpenGL/gl.h>
