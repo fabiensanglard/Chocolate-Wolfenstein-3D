@@ -1,3 +1,5 @@
 */DerivedData/*
+*.sdf
+*.suo
 .DS_Store
 xcuserdata
