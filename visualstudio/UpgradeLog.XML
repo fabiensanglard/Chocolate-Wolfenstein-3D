@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Wolf4SDL.VC9">
+</Property><Property Name="Solution File" Value="C:\dev\Chocolate-Wolfenstein-3D\Wolf4SDL.VC9.sln">
+</Property><Property Name="Date" Value="Friday, 5 September 2014">
+</Property><Property Name="Time" Value="19:30 PM">
+</Property></Properties><Event ErrorLevel="0" Project="Wolf4SDL.VC9" Source="Wolf4SDL.VC9.vcproj" Description="Converting project file 'C:\dev\Chocolate-Wolfenstein-3D\Wolf4SDL.VC9.vcproj'.">
+</Event><Event ErrorLevel="1" Project="Wolf4SDL.VC9" Source="Wolf4SDL.VC9.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="Wolf4SDL.VC9" Source="Wolf4SDL.VC9.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Wolf4SDL.VC9" Source="Wolf4SDL.VC9.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="Wolf4SDL.VC9" Source="Wolf4SDL.VC9.vcproj" Description="Done converting to new project file 'C:\dev\Chocolate-Wolfenstein-3D\Wolf4SDL.VC9.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="Wolf4SDL.VC9" Source="Wolf4SDL.VC9.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="Wolf4SDL.VC9.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Wolf4SDL.VC9.sln" Description="Converted">
+</Event></UpgradeLog>
