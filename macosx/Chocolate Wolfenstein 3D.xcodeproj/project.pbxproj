@@ -17,7 +17,6 @@
 		D901F5000FC0DBCB0040C290 /* wl_inter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4CF0FC0DBCB0040C290 /* wl_inter.cpp */; };
 		D901F5010FC0DBCB0040C290 /* wl_game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4D00FC0DBCB0040C290 /* wl_game.cpp */; };
 		D901F5030FC0DBCB0040C290 /* wl_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4D50FC0DBCB0040C290 /* wl_draw.cpp */; };
-		D901F5040FC0DBCB0040C290 /* wl_dir3dspr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4D60FC0DBCB0040C290 /* wl_dir3dspr.cpp */; };
 		D901F5050FC0DBCB0040C290 /* wl_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4D80FC0DBCB0040C290 /* wl_debug.cpp */; };
 		D901F5080FC0DBCB0040C290 /* wl_agent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4DD0FC0DBCB0040C290 /* wl_agent.cpp */; };
 		D901F5090FC0DBCB0040C290 /* wl_act2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4DE0FC0DBCB0040C290 /* wl_act2.cpp */; };
@@ -76,7 +75,6 @@
 		D901F4D20FC0DBCB0040C290 /* gfxv_wl6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gfxv_wl6.h; path = ../gfxv_wl6.h; sourceTree = SOURCE_ROOT; };
 		D901F4D30FC0DBCB0040C290 /* gfxv_apo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gfxv_apo.h; path = ../gfxv_apo.h; sourceTree = SOURCE_ROOT; };
 		D901F4D50FC0DBCB0040C290 /* wl_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wl_draw.cpp; path = ../wl_draw.cpp; sourceTree = SOURCE_ROOT; };
-		D901F4D60FC0DBCB0040C290 /* wl_dir3dspr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wl_dir3dspr.cpp; path = ../wl_dir3dspr.cpp; sourceTree = SOURCE_ROOT; };
 		D901F4D70FC0DBCB0040C290 /* wl_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wl_def.h; path = ../wl_def.h; sourceTree = SOURCE_ROOT; };
 		D901F4D80FC0DBCB0040C290 /* wl_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wl_debug.cpp; path = ../wl_debug.cpp; sourceTree = SOURCE_ROOT; };
 		D901F4DD0FC0DBCB0040C290 /* wl_agent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wl_agent.cpp; path = ../wl_agent.cpp; sourceTree = SOURCE_ROOT; };
@@ -184,7 +182,6 @@
 				D901F4D20FC0DBCB0040C290 /* gfxv_wl6.h */,
 				D901F4D30FC0DBCB0040C290 /* gfxv_apo.h */,
 				D901F4D50FC0DBCB0040C290 /* wl_draw.cpp */,
-				D901F4D60FC0DBCB0040C290 /* wl_dir3dspr.cpp */,
 				D901F4D70FC0DBCB0040C290 /* wl_def.h */,
 				D901F4D80FC0DBCB0040C290 /* wl_debug.cpp */,
 				D901F4DD0FC0DBCB0040C290 /* wl_agent.cpp */,
@@ -316,7 +313,6 @@
 				D901F5000FC0DBCB0040C290 /* wl_inter.cpp in Sources */,
 				D901F5010FC0DBCB0040C290 /* wl_game.cpp in Sources */,
 				D901F5030FC0DBCB0040C290 /* wl_draw.cpp in Sources */,
-				D901F5040FC0DBCB0040C290 /* wl_dir3dspr.cpp in Sources */,
 				D901F5050FC0DBCB0040C290 /* wl_debug.cpp in Sources */,
 				D901F5080FC0DBCB0040C290 /* wl_agent.cpp in Sources */,
 				D901F5090FC0DBCB0040C290 /* wl_act2.cpp in Sources */,
