@@ -1,5 +1,11 @@
 */DerivedData/*
-*.sdf
-*.suo
 .DS_Store
 xcuserdata
+
+#visual studio files
+*.sdf
+*.suo
+*.vcxproj.user
+Debug
+Release
+Backup

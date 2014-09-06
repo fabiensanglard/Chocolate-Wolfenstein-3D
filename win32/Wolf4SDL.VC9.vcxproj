@@ -97,7 +97,7 @@
     <ClCompile Include="..\id_us_1.cpp" />
     <ClCompile Include="..\id_vh.cpp" />
     <ClCompile Include="..\id_vl.cpp" />
-    <ClCompile Include="..\sdl_winmain.cpp" />
+    <ClCompile Include="sdl_winmain.cpp" />
     <ClCompile Include="..\signon.cpp" />
     <ClCompile Include="..\wl_act1.cpp" />
     <ClCompile Include="..\wl_act2.cpp" />
