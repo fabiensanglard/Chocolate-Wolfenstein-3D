@@ -352,18 +352,27 @@ boolean FizzleFade (SDL_Surface *source, int x1, int y1,
     IN_StartAck ();
 
     frame = GetTimeCount();
-    byte *srcptr = VL_LockSurface(source);
+
+    //can't rely on screen as dest b/c crt.cpp writes over it with screenBuffer
+    //can't rely on screenBuffer as source for same reason: every flip it has to be updated
+    SDL_Surface *source_copy = SDL_ConvertSurface(source, source->format, source->flags);
+    SDL_Surface *screen_copy = SDL_ConvertSurface(screen, screen->format, screen->flags);
+
+    byte *srcptr = VL_LockSurface(source_copy);
     do
     {
         if(abortable && IN_CheckAck ())
         {
-            VL_UnlockSurface(source);
+            VL_UnlockSurface(source_copy);
+            SDL_BlitSurface(screen_copy, NULL, screenBuffer, NULL);
             SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
             SDL_Flip(screen);
+            SDL_FreeSurface(source_copy);
+            SDL_FreeSurface(screen_copy);
             return true;
         }
 
-        byte *destptr = VL_LockSurface(screen);
+        byte *destptr = VL_LockSurface(screen_copy);
 
         rndval = lastrndval;
 
@@ -421,7 +430,9 @@ boolean FizzleFade (SDL_Surface *source, int x1, int y1,
         // If there is no double buffering, we always use the "first frame" case
         if(usedoublebuffering) first = 0;
 
-        VL_UnlockSurface(screen);
+        VL_UnlockSurface(screen_copy);
+        SDL_BlitSurface(screen_copy, NULL, screenBuffer, NULL);
+        SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
         SDL_Flip(screen);
 
         frame++;
@@ -429,9 +440,12 @@ boolean FizzleFade (SDL_Surface *source, int x1, int y1,
     } while (1);
 
 finished:
-    VL_UnlockSurface(source);
-    VL_UnlockSurface(screen);
+    VL_UnlockSurface(source_copy);
+    VL_UnlockSurface(screen_copy);
+    SDL_BlitSurface(screen_copy, NULL, screenBuffer, NULL);
     SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
     SDL_Flip(screen);
+    SDL_FreeSurface(source_copy);
+    SDL_FreeSurface(screen_copy);
     return false;
 }
