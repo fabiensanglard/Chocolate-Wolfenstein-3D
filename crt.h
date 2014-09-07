@@ -20,6 +20,7 @@
 #include <OpenGL/gl.h>
 #endif
 
+extern SDL_Color curpal[256];
 /*
  * CRT aspect ratio is 4:3, height will be infered.
  */

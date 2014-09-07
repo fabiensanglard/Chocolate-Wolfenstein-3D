@@ -61,9 +61,9 @@ void CRT_DAC(void){
     for (int i=0; i < 320*200; i++) {
         unsigned char paletteIndex;
         paletteIndex = ((byte*)screen->pixels)[i];
-        *pixelPointer++ = gamepal[paletteIndex].r;
-        *pixelPointer++ = gamepal[paletteIndex].g;
-        *pixelPointer++ = gamepal[paletteIndex].b;
+        *pixelPointer++ = curpal[paletteIndex].r;
+        *pixelPointer++ = curpal[paletteIndex].g;
+        *pixelPointer++ = curpal[paletteIndex].b;
     }
     
     //Upload texture
