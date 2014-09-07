@@ -113,8 +113,6 @@
     <ClCompile Include="..\wl_text.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Changes.txt" />
-    <None Include="..\README.txt" />
     <None Include="..\sodpal.inc" />
     <None Include="..\wolfpal.inc" />
   </ItemGroup>

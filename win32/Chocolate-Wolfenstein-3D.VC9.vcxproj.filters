@@ -92,8 +92,6 @@
     <None Include="..\wolfpal.inc">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\Changes.txt" />
-    <None Include="..\README.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\audiosod.h">
