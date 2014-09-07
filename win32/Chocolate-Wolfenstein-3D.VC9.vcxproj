@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>Wolf4SDL</ProjectName>
+    <ProjectName>Chocolate Wolfenstein 3D</ProjectName>
     <ProjectGuid>{411B026A-F58B-4E25-840B-4FE67710F762}</ProjectGuid>
-    <RootNamespace>Wolf4SDL</RootNamespace>
+    <RootNamespace>Chocolate_Wolfenstein_3D</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

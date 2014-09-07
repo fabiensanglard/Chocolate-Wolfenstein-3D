@@ -136,7 +136,7 @@ static void cleanup_output(void)
             if(readbytes != 0)
             {
                 buf[readbytes] = 0;     // cut after last byte (<=16383)
-                MessageBox(NULL, buf, "Wolf4SDL", MB_OK);
+                MessageBox(NULL, buf, "Chocolate Wolfenstein 3D", MB_OK);
             }
             else
                 remove(stdoutPath);     // remove empty file
@@ -152,7 +152,7 @@ static void cleanup_output(void)
             if(readbytes != 0)
             {
                 buf[readbytes] = 0;     // cut after last byte (<=16383)
-                MessageBox(NULL, buf, "Wolf4SDL", MB_OK);
+                MessageBox(NULL, buf, "Chocolate Wolfenstein 3D", MB_OK);
             }
             else
                 remove(stderrPath);     // remove empty file
