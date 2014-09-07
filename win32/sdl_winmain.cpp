@@ -14,19 +14,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#ifdef _WIN32_WCE
-# define DIR_SEPERATOR TEXT("\\")
-# undef _getcwd
-# define _getcwd(str,len)	wcscpy(str,TEXT(""))
-# define setbuf(f,b)
-# define setvbuf(w,x,y,z)
-# define fopen		_wfopen
-# define freopen	_wfreopen
-# define remove(x)	DeleteFile(x)
-#else
 # define DIR_SEPERATOR TEXT("/")
 # include <direct.h>
-#endif
 
 // Win32
 /* Include the SDL main definition header */
@@ -34,9 +23,7 @@
 #include <SDL/SDL_main.h>
 
 #ifdef main
-# ifndef _WIN32_WCE_EMULATION
 #  undef main
-# endif /* _WIN32_WCE_EMULATION */
 #endif /* main */
 
 /* The standard output files */
@@ -44,19 +31,9 @@
 #define STDERR_FILE	TEXT("stderr.txt")
 
 #ifndef NO_STDIO_REDIRECT
-# ifdef _WIN32_WCE
-  static wchar_t stdoutPath[MAX_PATH];
-  static wchar_t stderrPath[MAX_PATH];
-# else
   static char stdoutPath[MAX_PATH];
   static char stderrPath[MAX_PATH];
-# endif
 #endif
-
-#if defined(_WIN32_WCE) && _WIN32_WCE < 300
-/* seems to be undefined in Win CE although in online help */
-#define isspace(a) (((CHAR)a == ' ') || ((CHAR)a == '\t'))
-#endif /* _WIN32_WCE < 300 */
 
 /* Parse a command line buffer into arguments */
 static int ParseCommandLine(char *cmdline, char **argv)
@@ -185,11 +162,6 @@ static void cleanup_output(void)
 #endif
 }
 
-//#if defined(_MSC_VER) && !defined(_WIN32_WCE)
-///* The VC++ compiler needs main defined */
-//#define console_main main
-//#endif
-
 /* This is where execution begins [console apps] */
 int console_main(int argc, char *argv[])
 {
@@ -244,30 +216,17 @@ int console_main(int argc, char *argv[])
 }
 
 /* This is where execution begins [windowed apps] */
-#ifdef _WIN32_WCE
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPWSTR szCmdLine, int sw)
-#else
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
-#endif
 {
 	HINSTANCE handle;
 	char **argv;
 	int argc;
 	char *cmdline;
-#ifdef _WIN32_WCE
-	wchar_t *bufp;
-	int nLen;
-#else
 	char *bufp;
 	size_t nLen;
-#endif
 #ifndef NO_STDIO_REDIRECT
 	DWORD pathlen;
-#ifdef _WIN32_WCE
-	wchar_t path[MAX_PATH];
-#else
 	char path[MAX_PATH];
-#endif
 	FILE *newfp;
 #endif
 
@@ -287,18 +246,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
 	}
 	path[pathlen] = '\0';
 
-#ifdef _WIN32_WCE
-	wcsncpy( stdoutPath, path, SDL_arraysize(stdoutPath) );
-	wcsncat( stdoutPath, DIR_SEPERATOR STDOUT_FILE, SDL_arraysize(stdoutPath) );
-#else
 	SDL_strlcpy( stdoutPath, path, SDL_arraysize(stdoutPath) );
 	SDL_strlcat( stdoutPath, DIR_SEPERATOR STDOUT_FILE, SDL_arraysize(stdoutPath) );
-#endif
 
 	/* Redirect standard input and standard output */
 	newfp = freopen(stdoutPath, TEXT("w"), stdout);
 
-#ifndef _WIN32_WCE
 	if ( newfp == NULL ) {	/* This happens on NT */
 #if !defined(stdout)
 		stdout = fopen(stdoutPath, TEXT("w"));
@@ -309,18 +262,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
 		}
 #endif
 	}
-#endif /* _WIN32_WCE */
 
-#ifdef _WIN32_WCE
-	wcsncpy( stderrPath, path, SDL_arraysize(stdoutPath) );
-	wcsncat( stderrPath, DIR_SEPERATOR STDOUT_FILE, SDL_arraysize(stdoutPath) );
-#else
 	SDL_strlcpy( stderrPath, path, SDL_arraysize(stderrPath) );
 	SDL_strlcat( stderrPath, DIR_SEPERATOR STDERR_FILE, SDL_arraysize(stderrPath) );
-#endif
 
 	newfp = freopen(stderrPath, TEXT("w"), stderr);
-#ifndef _WIN32_WCE
 	if ( newfp == NULL ) {	/* This happens on NT */
 #if !defined(stderr)
 		stderr = fopen(stderrPath, TEXT("w"));
@@ -331,26 +277,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
 		}
 #endif
 	}
-#endif /* _WIN32_WCE */
 
 	setvbuf(stdout, NULL, _IOLBF, BUFSIZ);	/* Line buffered */
 	setbuf(stderr, NULL);			/* No buffering */
 #endif /* !NO_STDIO_REDIRECT */
 
-#ifdef _WIN32_WCE
-	nLen = wcslen(szCmdLine)+128+1;
-	bufp = SDL_stack_alloc(wchar_t, nLen*2);
-	wcscpy (bufp, TEXT("\""));
-	GetModuleFileName(NULL, bufp+1, 128-3);
-	wcscpy (bufp+wcslen(bufp), TEXT("\" "));
-	wcsncpy(bufp+wcslen(bufp), szCmdLine,nLen-wcslen(bufp));
-	nLen = wcslen(bufp)+1;
-	cmdline = SDL_stack_alloc(char, nLen);
-	if ( cmdline == NULL ) {
-		return OutOfMemory();
-	}
-	WideCharToMultiByte(CP_ACP, 0, bufp, -1, cmdline, nLen, NULL, NULL);
-#else
 	/* Grab the command line */
 	bufp = GetCommandLine();
 	nLen = SDL_strlen(bufp)+1;
@@ -359,7 +290,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
 		return OutOfMemory();
 	}
 	SDL_strlcpy(cmdline, bufp, nLen);
-#endif
 
 	/* Parse it into argv and argc */
 	argc = ParseCommandLine(cmdline, NULL);

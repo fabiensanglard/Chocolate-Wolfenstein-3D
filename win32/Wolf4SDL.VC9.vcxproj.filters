@@ -60,9 +60,6 @@
     <ClCompile Include="..\wl_debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\wl_dir3dspr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\wl_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -97,13 +97,12 @@
     <ClCompile Include="..\id_us_1.cpp" />
     <ClCompile Include="..\id_vh.cpp" />
     <ClCompile Include="..\id_vl.cpp" />
-    <ClCompile Include="..\sdl_winmain.cpp" />
+    <ClCompile Include="sdl_winmain.cpp" />
     <ClCompile Include="..\signon.cpp" />
     <ClCompile Include="..\wl_act1.cpp" />
     <ClCompile Include="..\wl_act2.cpp" />
     <ClCompile Include="..\wl_agent.cpp" />
     <ClCompile Include="..\wl_debug.cpp" />
-    <ClCompile Include="..\wl_dir3dspr.cpp" />
     <ClCompile Include="..\wl_draw.cpp" />
     <ClCompile Include="..\wl_game.cpp" />
     <ClCompile Include="..\wl_inter.cpp" />
