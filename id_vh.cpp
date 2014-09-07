@@ -1,51 +1,51 @@
 #include "wl_def.h"
 
 
-pictabletype	*pictable;
+pictabletype    *pictable;
 SDL_Surface     *latchpics[NUMLATCHPICS];
 
-int	    px,py;
-byte	fontcolor,backcolor;
-int	    fontnumber;
+int     px,py;
+byte    fontcolor,backcolor;
+int     fontnumber;
 
 //==========================================================================
 
 void VWB_DrawPropString(const char* string)
 {
-	fontstruct  *font;
-	int		    width, step, height;
-	byte	    *source, *dest;
-	byte	    ch;
+    fontstruct  *font;
+    int         width, step, height;
+    byte        *source, *dest;
+    byte        ch;
 
     byte *vbuf = LOCK();
 
-	font = (fontstruct *) grsegs[STARTFONT+fontnumber];
-	height = font->height;
-	dest = vbuf + scaleFactor * (py * curPitch + px);
+    font = (fontstruct *) grsegs[STARTFONT+fontnumber];
+    height = font->height;
+    dest = vbuf + scaleFactor * (py * curPitch + px);
 
-	while ((ch = (byte)*string++)!=0)
-	{
-		width = step = font->width[ch];
-		source = ((byte *)font)+font->location[ch];
-		while (width--)
-		{
-			for(int i=0;i<height;i++)
-			{
-				if(source[i*step])
+    while ((ch = (byte)*string++)!=0)
+    {
+        width = step = font->width[ch];
+        source = ((byte *)font)+font->location[ch];
+        while (width--)
+        {
+            for(int i=0;i<height;i++)
+            {
+                if(source[i*step])
                 {
                     for(unsigned sy=0; sy<scaleFactor; sy++)
                         for(unsigned sx=0; sx<scaleFactor; sx++)
-        					dest[(scaleFactor*i+sy)*curPitch+sx]=fontcolor;
+                            dest[(scaleFactor*i+sy)*curPitch+sx]=fontcolor;
                 }
-			}
+            }
 
-			source++;
-			px++;
-			dest+=scaleFactor;
-		}
-	}
+            source++;
+            px++;
+            dest+=scaleFactor;
+        }
+    }
 
-	UNLOCK();
+    UNLOCK();
 }
 
 /*
@@ -58,57 +58,57 @@ void VWB_DrawPropString(const char* string)
 
 void VL_MungePic (byte *source, unsigned width, unsigned height)
 {
-	unsigned x,y,plane,size,pwidth;
-	byte *temp, *dest, *srcline;
+    unsigned x,y,plane,size,pwidth;
+    byte *temp, *dest, *srcline;
 
-	size = width*height;
+    size = width*height;
 
-	if (width&3)
-		Quit ("VL_MungePic: Not divisable by 4!");
+    if (width&3)
+        Quit ("VL_MungePic: Not divisable by 4!");
 
 //
 // copy the pic to a temp buffer
 //
-	temp=(byte *) malloc(size);
+    temp=(byte *) malloc(size);
     CHECKMALLOCRESULT(temp);
-	memcpy (temp,source,size);
+    memcpy (temp,source,size);
 
 //
 // munge it back into the original buffer
 //
-	dest = source;
-	pwidth = width/4;
+    dest = source;
+    pwidth = width/4;
 
-	for (plane=0;plane<4;plane++)
-	{
-		srcline = temp;
-		for (y=0;y<height;y++)
-		{
-			for (x=0;x<pwidth;x++)
-				*dest++ = *(srcline+x*4+plane);
-			srcline+=width;
-		}
-	}
+    for (plane=0;plane<4;plane++)
+    {
+        srcline = temp;
+        for (y=0;y<height;y++)
+        {
+            for (x=0;x<pwidth;x++)
+                *dest++ = *(srcline+x*4+plane);
+            srcline+=width;
+        }
+    }
 
-	free(temp);
+    free(temp);
 }
 
 void VWL_MeasureString (const char *string, word *width, word *height, fontstruct *font)
 {
-	*height = font->height;
-	for (*width = 0;*string;string++)
-		*width += font->width[*((byte *)string)];	// proportional width
+    *height = font->height;
+    for (*width = 0;*string;string++)
+        *width += font->width[*((byte *)string)];   // proportional width
 }
 
 void VW_MeasurePropString (const char *string, word *width, word *height)
 {
-	VWL_MeasureString(string,width,height,(fontstruct *)grsegs[STARTFONT+fontnumber]);
+    VWL_MeasureString(string,width,height,(fontstruct *)grsegs[STARTFONT+fontnumber]);
 }
 
 /*
 =============================================================================
 
-				Double buffer management routines
+                Double buffer management routines
 
 =============================================================================
 */
@@ -116,40 +116,40 @@ void VW_MeasurePropString (const char *string, word *width, word *height)
 void VH_UpdateScreen()
 {
     SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
-	SDL_Flip(screen);
+    SDL_Flip(screen);
 }
 
 
 void VWB_DrawTile8 (int x, int y, int tile)
 {
-	LatchDrawChar(x,y,tile);
+    LatchDrawChar(x,y,tile);
 }
 
 void VWB_DrawTile8M (int x, int y, int tile)
 {
-	VL_MemToScreen (((byte *)grsegs[STARTTILE8M])+tile*64,8,8,x,y);
+    VL_MemToScreen (((byte *)grsegs[STARTTILE8M])+tile*64,8,8,x,y);
 }
 
 void VWB_DrawPic (int x, int y, int chunknum)
 {
-	int	picnum = chunknum - STARTPICS;
-	unsigned width,height;
+    int picnum = chunknum - STARTPICS;
+    unsigned width,height;
 
-	x &= ~7;
+    x &= ~7;
 
-	width = pictable[picnum].width;
-	height = pictable[picnum].height;
+    width = pictable[picnum].width;
+    height = pictable[picnum].height;
 
-	VL_MemToScreen (grsegs[chunknum],width,height,x,y);
+    VL_MemToScreen (grsegs[chunknum],width,height,x,y);
 }
 
 void VWB_DrawPicScaledCoord (int scx, int scy, int chunknum)
 {
-	int	picnum = chunknum - STARTPICS;
-	unsigned width,height;
+    int picnum = chunknum - STARTPICS;
+    unsigned width,height;
 
-	width = pictable[picnum].width;
-	height = pictable[picnum].height;
+    width = pictable[picnum].width;
+    height = pictable[picnum].height;
 
     VL_MemToScreenScaledCoord (grsegs[chunknum],width,height,scx,scy);
 }
@@ -157,7 +157,7 @@ void VWB_DrawPicScaledCoord (int scx, int scy, int chunknum)
 
 void VWB_Bar (int x, int y, int width, int height, int color)
 {
-	VW_Bar (x,y,width,height,color);
+    VW_Bar (x,y,width,height,color);
 }
 
 void VWB_Plot (int x, int y, int color)
@@ -171,7 +171,7 @@ void VWB_Plot (int x, int y, int color)
 void VWB_Hlin (int x1, int x2, int y, int color)
 {
     if(scaleFactor == 1)
-    	VW_Hlin(x1,x2,y,color);
+        VW_Hlin(x1,x2,y,color);
     else
         VW_Bar(x1, y, x2-x1+1, 1, color);
 }
@@ -179,7 +179,7 @@ void VWB_Hlin (int x1, int x2, int y, int color)
 void VWB_Vlin (int y1, int y2, int x, int color)
 {
     if(scaleFactor == 1)
-		VW_Vlin(y1,y2,x,color);
+        VW_Vlin(y1,y2,x,color);
     else
         VW_Bar(x, y1, 1, y2-y1+1, color);
 }
@@ -188,7 +188,7 @@ void VWB_Vlin (int y1, int y2, int x, int color)
 /*
 =============================================================================
 
-						WOLFENSTEIN STUFF
+                        WOLFENSTEIN STUFF
 
 =============================================================================
 */
@@ -203,12 +203,12 @@ void VWB_Vlin (int y1, int y2, int x, int color)
 
 void LatchDrawPic (unsigned x, unsigned y, unsigned picnum)
 {
-	VL_LatchToScreen (latchpics[2+picnum-LATCHPICS_LUMP_START], x*8, y);
+    VL_LatchToScreen (latchpics[2+picnum-LATCHPICS_LUMP_START], x*8, y);
 }
 
 void LatchDrawPicScaledCoord (unsigned scx, unsigned scy, unsigned picnum)
 {
-	VL_LatchToScreenScaledCoord (latchpics[2+picnum-LATCHPICS_LUMP_START], scx*8, scy);
+    VL_LatchToScreenScaledCoord (latchpics[2+picnum-LATCHPICS_LUMP_START], scx*8, scy);
 }
 
 
@@ -224,9 +224,9 @@ void LatchDrawPicScaledCoord (unsigned scx, unsigned scy, unsigned picnum)
 
 void LoadLatchMem (void)
 {
-	int	i,width,height,start,end;
-	byte *src;
-	SDL_Surface *surf;
+    int i,width,height,start,end;
+    byte *src;
+    SDL_Surface *surf;
 
 //
 // tile 8s
@@ -240,39 +240,39 @@ void LoadLatchMem (void)
     }
     SDL_SetColors(surf, gamepal, 0, 256);
 
-	latchpics[0] = surf;
-	CA_CacheGrChunk (STARTTILE8);
-	src = grsegs[STARTTILE8];
+    latchpics[0] = surf;
+    CA_CacheGrChunk (STARTTILE8);
+    src = grsegs[STARTTILE8];
 
-	for (i=0;i<NUMTILE8;i++)
-	{
-		VL_MemToLatch (src, 8, 8, surf, (i & 7) * 8, (i >> 3) * 8);
-		src += 64;
-	}
-	UNCACHEGRCHUNK (STARTTILE8);
+    for (i=0;i<NUMTILE8;i++)
+    {
+        VL_MemToLatch (src, 8, 8, surf, (i & 7) * 8, (i >> 3) * 8);
+        src += 64;
+    }
+    UNCACHEGRCHUNK (STARTTILE8);
 
 //
 // pics
 //
-	start = LATCHPICS_LUMP_START;
-	end = LATCHPICS_LUMP_END;
+    start = LATCHPICS_LUMP_START;
+    end = LATCHPICS_LUMP_END;
 
-	for (i=start;i<=end;i++)
-	{
-		width = pictable[i-STARTPICS].width;
-		height = pictable[i-STARTPICS].height;
-		surf = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, 8, 0, 0, 0, 0);
+    for (i=start;i<=end;i++)
+    {
+        width = pictable[i-STARTPICS].width;
+        height = pictable[i-STARTPICS].height;
+        surf = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, 8, 0, 0, 0, 0);
         if(surf == NULL)
         {
             Quit("Unable to create surface for picture!");
         }
         SDL_SetColors(surf, gamepal, 0, 256);
 
-		latchpics[2+i-start] = surf;
-		CA_CacheGrChunk (i);
-		VL_MemToLatch (grsegs[i], width, height, surf, 0, 0);
-		UNCACHEGRCHUNK(i);
-	}
+        latchpics[2+i-start] = surf;
+        CA_CacheGrChunk (i);
+        VL_MemToLatch (grsegs[i], width, height, surf, 0, 0);
+        UNCACHEGRCHUNK(i);
+    }
 }
 
 //==========================================================================
@@ -420,7 +420,7 @@ boolean FizzleFade (SDL_Surface *source, int x1, int y1,
                         &fullcol, screen->format->BytesPerPixel);
                 }
 
-                if(rndval == 0)		// entire sequence has been completed
+                if(rndval == 0)     // entire sequence has been completed
                     goto finished;
             }
 

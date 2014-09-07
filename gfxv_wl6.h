@@ -164,17 +164,17 @@ typedef enum {
 //
 // Data LUMPs
 //
-#define README_LUMP_START		3
-#define README_LUMP_END			9
+#define README_LUMP_START       3
+#define README_LUMP_END         9
 
-#define CONTROLS_LUMP_START		10
-#define CONTROLS_LUMP_END		42
+#define CONTROLS_LUMP_START     10
+#define CONTROLS_LUMP_END       42
 
-#define LEVELEND_LUMP_START		43
-#define LEVELEND_LUMP_END		85
+#define LEVELEND_LUMP_START     43
+#define LEVELEND_LUMP_END       85
 
-#define LATCHPICS_LUMP_START	91
-#define LATCHPICS_LUMP_END		134
+#define LATCHPICS_LUMP_START    91
+#define LATCHPICS_LUMP_END      134
 
 
 //
