@@ -15,9 +15,9 @@
 #include <wtypes.h>
 #endif
 #if !defined(_WIN32)
-#	include <stdint.h>
-#	include <string.h>
-#	include <stdarg.h>
+#   include <stdint.h>
+#   include <string.h>
+#   include <stdarg.h>
 #endif
 #include <SDL/SDL.h>
 
@@ -27,7 +27,7 @@
 #endif
 
 #if !defined O_BINARY
-#	define O_BINARY 0
+#   define O_BINARY 0
 #endif
 
 #pragma pack(1)
@@ -1328,7 +1328,7 @@ extern  void    EndText(void);
 
 static inline fixed FixedMul(fixed a, fixed b)
 {
-	return (fixed)(((int64_t)a * b + 0x8000) >> 16);
+    return (fixed)(((int64_t)a * b + 0x8000) >> 16);
 }
 
 #ifdef PLAYDEMOLIKEORIGINAL
@@ -1355,14 +1355,14 @@ static inline fixed FixedMul(fixed a, fixed b)
 #else
     static inline char* itoa(int value, char* string, int radix)
     {
-	    sprintf(string, "%d", value);
-	    return string;
+        sprintf(string, "%d", value);
+        return string;
     }
 
     static inline char* ltoa(long value, char* string, int radix)
     {
-	    sprintf(string, "%ld", value);
-	    return string;
+        sprintf(string, "%ld", value);
+        return string;
     }
 #endif
 

@@ -1206,7 +1206,7 @@ vertentry:
                     {
                         if(pwalldir==di_west || pwalldir==di_east)
                         {
-	                        int32_t yintbuf;
+                            int32_t yintbuf;
                             int pwallposnorm;
                             int pwallposinv;
                             if(pwalldir==di_west)

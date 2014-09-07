@@ -111,8 +111,8 @@ SDMode oldsoundmode;
 
 static int32_t GRFILEPOS(const size_t idx)
 {
-	assert(idx < lengthof(grstarts));
-	return grstarts[idx];
+    assert(idx < lengthof(grstarts));
+    return grstarts[idx];
 }
 
 /*
@@ -480,9 +480,9 @@ void CAL_SetupGrFile (void)
     lseek(handle, 0, SEEK_SET);
 
 #ifndef APOGEE_1_0
-	int expectedsize = lengthof(grstarts) - numEpisodesMissing;
+    int expectedsize = lengthof(grstarts) - numEpisodesMissing;
 #else
-	int expectedsize = lengthof(grstarts);
+    int expectedsize = lengthof(grstarts);
 #endif
 
     if(!param_ignorenumchunks && headersize / 3 != (long) expectedsize)
