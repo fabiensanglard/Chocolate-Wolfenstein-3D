@@ -20,6 +20,6 @@ like the CRT did :
 
 ![alt tag](https://github.com/fabiensanglard/Chocolate-Wolfenstein-3D/blob/master/screenshots/crt_aspect.png)
 
-Tested on Mac OS X. If anybody wants to make a Windows and Linux build, you are welcome.
+Tested on Windows, Linux and Mac OS X
 
 Fabien Sanglard 
