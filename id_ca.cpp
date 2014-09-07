@@ -486,7 +486,7 @@ void CAL_SetupGrFile (void)
 #endif
 
     if(!param_ignorenumchunks && headersize / 3 != (long) expectedsize)
-        Quit("Wolf4SDL was not compiled for these data files:\n"
+        Quit("Chocolate Wolfenstein 3D was not compiled for these data files:\n"
             "%s contains a wrong number of offsets (%i instead of %i)!\n\n"
             "Please check whether you are using the right executable!\n"
             "(For mod developers: perhaps you forgot to update NUMCHUNKS?)",

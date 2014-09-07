@@ -3961,7 +3961,7 @@ CheckForEpisodes (void)
 {
     struct stat statbuf;
 
-    // On Linux like systems, the configdir defaults to $HOME/.wolf4sdl
+    // On Linux like systems, the configdir defaults to $HOME/.chocolate_wolfenstein_3d
 #if !defined(_WIN32)
     if(configdir[0] == 0)
     {
@@ -3971,7 +3971,7 @@ CheckForEpisodes (void)
         {
             Quit("Your $HOME directory is not defined. You must set this before playing.");
         }
-        #define WOLFDIR "/.wolf4sdl"
+        #define WOLFDIR "/.chocolate_wolfenstein_3d"
         if(strlen(homedir) + sizeof(WOLFDIR) > sizeof(configdir))
         {
             Quit("Your $HOME directory path is too long. It cannot be used for saving games.");

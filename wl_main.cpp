@@ -1852,10 +1852,9 @@ void CheckParameters(int argc, char *argv[])
     {
         if(hasError) printf("\n");
         printf(
-            "Wolf4SDL v1.7 ($Revision: 256 $)\n"
-            "Ported by Chaos-Software (http://www.chaos-software.de.vu)\n"
+            "Chocolate Wolfenstein 3D\n" //TODO: add version #? author credit? site link?
+            "Based on Wolf4SDL, by Moritz \"Ripper\" Kroll (http://www.chaos-software.de.vu)\n"
             "Original Wolfenstein 3D by id Software\n\n"
-            "Usage: Wolf4SDL [options]\n"
             "Options:\n"
             " --help                 This help page\n"
             " --tedlevel <level>     Starts the game in the given level\n"
@@ -1887,7 +1886,7 @@ void CheckParameters(int argc, char *argv[])
 #if defined(_WIN32)
             "                        (default: current directory)\n"
 #else
-            "                        (default: $HOME/.wolf4sdl)\n"
+            "                        (default: $HOME/.chocolate_wolfenstein_3d)\n"
 #endif
 #if defined(SPEAR) && !defined(SPEARDEMO)
             " --mission <mission>    Mission number to play (0-3)\n"

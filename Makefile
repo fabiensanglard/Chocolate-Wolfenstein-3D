@@ -2,7 +2,7 @@ CONFIG ?= config.default
 -include $(CONFIG)
 
 
-BINARY    ?= wolf3d
+BINARY    ?= Chocolate-Wolfenstein-3D
 PREFIX    ?= /usr/local
 MANPREFIX ?= $(PREFIX)
 UNAME := $(shell uname -s)
