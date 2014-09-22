@@ -1348,6 +1348,8 @@ static inline fixed FixedMul(fixed a, fixed b)
 
 #define CHECKMALLOCRESULT(x) if(!(x)) Quit("Out of memory at %s:%i", __FILE__, __LINE__)
 
+// Mingw32 includes these definitions in string.h
+#ifndef __MINGW32__
 #ifdef _WIN32
     #define strcasecmp stricmp
     #define strncasecmp strnicmp
@@ -1364,6 +1366,7 @@ static inline fixed FixedMul(fixed a, fixed b)
         sprintf(string, "%ld", value);
         return string;
     }
+#endif
 #endif
 
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))

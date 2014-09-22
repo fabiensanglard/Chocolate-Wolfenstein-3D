@@ -1,0 +1,93 @@
+# compiler
+#CXX = gcc -std=c89
+
+# binary name
+BINARY = Chocolate-Wolfenstein-3D.exe
+
+# search path for dependencies
+VPATH = win32
+
+# build directory
+OBJDIR = build
+
+# compiler\include
+CFLAGS = -Wpointer-arith
+CFLAGS += -Wreturn-type
+CFLAGS += -Wwrite-strings
+CFLAGS += -Wcast-align
+#CFLAGS = $(INCLUDE)
+
+CCFLAGS = $(CFLAGS)
+CCFLAGS += -std=c++11
+CCFLAGS += -Werror-implicit-function-declaration
+#CCFLAGS += -Wimplicit-int
+CCFLAGS += -Wsequence-point
+#CCFLAGS = $(INCLUDE)
+
+CXXFLAGS += $(CFLAGS)
+
+# linker\library
+#LDFLAGS = -Wall
+LDFLAGS += -lmingw32
+LDFLAGS += -mwindows
+LDFLAGS += -mconsole
+LDFLAGS += -static-libgcc
+LDFLAGS += -static-libstdc++
+#LDFLAGS = $(LIB)
+LDFLAGS += -lSDLmain -lSDL -lSDL_mixer -lopengl32
+
+# source files
+SRCS :=
+SRCS += fmopl.cpp
+SRCS += id_ca.cpp
+SRCS += id_in.cpp
+SRCS += id_pm.cpp
+SRCS += id_sd.cpp
+SRCS += id_us_1.cpp
+SRCS += id_vh.cpp
+SRCS += id_vl.cpp
+SRCS += signon.cpp
+SRCS += wl_act1.cpp
+SRCS += wl_act2.cpp
+SRCS += wl_agent.cpp
+SRCS += wl_debug.cpp
+SRCS += wl_draw.cpp
+SRCS += wl_game.cpp
+SRCS += wl_inter.cpp
+SRCS += wl_main.cpp
+SRCS += wl_menu.cpp
+SRCS += wl_play.cpp
+SRCS += wl_state.cpp
+SRCS += wl_text.cpp
+SRCS += crt.cpp
+SRCS += sdl_winmain.cpp
+
+# object prerequisites
+OBJS = $(filter %.o, $(SRCS:.c=.o) $(SRCS:.cpp=.o))
+
+# macro expansion used for cleaning
+REBUILDABLES = $(OBJS) $(BINARY)
+
+# a rule for "all"
+all : $(OBJS) $(OBJDIR)/$(BINARY)
+	echo All done
+
+# link pattern matching rule; $@ matches the target; $^ matches all prerequisites
+$(OBJDIR)/$(BINARY): $(addprefix $(OBJDIR)/, $(OBJS))
+	$(CXX) -g $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+# compile pattern matching rule; $@ pattern match target; @< pattern matched prerequisite
+$(OBJS): %.o: %.cpp
+	$(CXX) -g $(CXXFLAGS) -o $(OBJDIR)/$@ -c $<
+
+# order only prerequisite
+$(OBJS): | $(OBJDIR)
+
+# rule for build directory
+$(OBJDIR):
+	mkdir $(OBJDIR)
+
+# a rule for "clean" the build environment
+clean :
+	del /S $(REBUILDABLES)
+	echo Clean done
