@@ -290,8 +290,13 @@ static void processEvent(SDL_Event *event)
                 if(sym < lengthof(ASCIINames) && ASCIINames[sym])
                     LastASCII = ASCIINames[sym];
             }
-            if(LastScan<SDLK_LAST)
+
+			if (LastScan<SDLK_i){
+			}
+
+			if(LastScan<SDLK_LAST){
                 Keyboard[LastScan] = 1;
+			}
             if(LastScan == SDLK_PAUSE)
                 Paused = true;
             break;
@@ -318,8 +323,9 @@ static void processEvent(SDL_Event *event)
                 }
             }
 
-            if(key<SDLK_LAST)
+			if(key<SDLK_LAST){
                 Keyboard[key] = 0;
+			}
             break;
         }
 
@@ -475,40 +481,6 @@ IN_ReadControl(int player,ControlInfo *info)
     info->button2 = (buttons & (1 << 2)) != 0;
     info->button3 = (buttons & (1 << 3)) != 0;
     info->dir = DirTable[((my + 1) * 3) + (mx + 1)];
-}
-
-///////////////////////////////////////////////////////////////////////////
-//
-//  IN_WaitForKey() - Waits for a scan code, then clears LastScan and
-//      returns the scan code
-//
-///////////////////////////////////////////////////////////////////////////
-ScanCode
-IN_WaitForKey(void)
-{
-    ScanCode    result;
-
-    while ((result = LastScan)==0)
-        IN_WaitAndProcessEvents();
-    LastScan = 0;
-    return(result);
-}
-
-///////////////////////////////////////////////////////////////////////////
-//
-//  IN_WaitForASCII() - Waits for an ASCII char, then clears LastASCII and
-//      returns the ASCII value
-//
-///////////////////////////////////////////////////////////////////////////
-char
-IN_WaitForASCII(void)
-{
-    char        result;
-
-    while ((result = LastASCII)==0)
-        IN_WaitAndProcessEvents();
-    LastASCII = '\0';
-    return(result);
 }
 
 ///////////////////////////////////////////////////////////////////////////

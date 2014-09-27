@@ -34,5 +34,7 @@ void CRT_Init(int width);
  */
 void CRT_DAC(void);
 
+void CRT_Screenshot(void);
+
 
 #endif

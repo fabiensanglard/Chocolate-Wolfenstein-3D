@@ -136,7 +136,7 @@ typedef struct      {
                                     joyMultXH,joyMultYH;
                     } JoystickDef;
 // Global variables
-extern  volatile boolean    Keyboard[];
+extern  volatile boolean    Keyboard[];;
 extern           boolean    MousePresent;
 extern  volatile boolean    Paused;
 extern  volatile char       LastASCII;
@@ -160,8 +160,6 @@ extern  void        IN_SetupJoy(word joy,word minx,word maxx,
 extern  void        IN_StopDemo(void),IN_FreeDemoBuffer(void),
                     IN_Ack(void);
 extern  boolean     IN_UserInput(longword delay);
-extern  char        IN_WaitForASCII(void);
-extern  ScanCode    IN_WaitForKey(void);
 extern  word        IN_GetJoyButtonsDB(word joy);
 extern  const char *IN_GetScanName(ScanCode);
 
