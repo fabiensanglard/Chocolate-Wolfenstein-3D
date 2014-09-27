@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "choco_wold3s", "choco_wold3s\choco_wold3s.vcproj", "{C895AC6E-7364-4865-9609-7BE6CABD7841}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C895AC6E-7364-4865-9609-7BE6CABD7841}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C895AC6E-7364-4865-9609-7BE6CABD7841}.Debug|Win32.Build.0 = Debug|Win32
+		{C895AC6E-7364-4865-9609-7BE6CABD7841}.Release|Win32.ActiveCfg = Release|Win32
+		{C895AC6E-7364-4865-9609-7BE6CABD7841}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

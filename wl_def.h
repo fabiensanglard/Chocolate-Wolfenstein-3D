@@ -13,18 +13,17 @@
 // Win32
 #ifdef _WIN32
 #include <wtypes.h>
+#include "SDL.h"
+#include "SDL_syswm.h"
 #endif
 #if !defined(_WIN32)
 #   include <stdint.h>
 #   include <string.h>
 #   include <stdarg.h>
-#endif
 #include <SDL/SDL.h>
 
-// Win32
-#ifdef _WIN32
-#include <SDL\SDL_syswm.h>
 #endif
+
 
 #if !defined O_BINARY
 #   define O_BINARY 0
