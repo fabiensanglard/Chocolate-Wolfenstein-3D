@@ -1,16 +1,15 @@
-# compiler
+# Usage: mingw32-make -f Makefile.mingw
+# all: builds all
+# depend: generates dependency files
+# clean: removes object and binary files
+# distclean: removes dependency, object and binary files
+
 #CXX = gcc -std=c89
 
-# binary name
 BINARY = Chocolate-Wolfenstein-3D.exe
 
-# search path for dependencies
 VPATH = win32
 
-# build directory
-OBJDIR = build
-
-# compiler\include
 CFLAGS = -Wpointer-arith
 CFLAGS += -Wreturn-type
 CFLAGS += -Wwrite-strings
@@ -20,13 +19,12 @@ CFLAGS += -Wcast-align
 CCFLAGS = $(CFLAGS)
 CCFLAGS += -std=c++11
 CCFLAGS += -Werror-implicit-function-declaration
-#CCFLAGS += -Wimplicit-int
+CCFLAGS += -Wimplicit-int
 CCFLAGS += -Wsequence-point
 #CCFLAGS = $(INCLUDE)
 
 CXXFLAGS += $(CFLAGS)
 
-# linker\library
 #LDFLAGS = -Wall
 LDFLAGS += -lmingw32
 LDFLAGS += -mwindows
@@ -36,7 +34,6 @@ LDFLAGS += -static-libstdc++
 #LDFLAGS = $(LIB)
 LDFLAGS += -lSDLmain -lSDL -lSDL_mixer -lopengl32
 
-# source files
 SRCS :=
 SRCS += fmopl.cpp
 SRCS += id_ca.cpp
@@ -62,32 +59,40 @@ SRCS += wl_text.cpp
 SRCS += crt.cpp
 SRCS += sdl_winmain.cpp
 
-# object prerequisites
+DEPS = $(filter %.d, $(SRCS:.c=.d) $(SRCS:.cpp=.d))
 OBJS = $(filter %.o, $(SRCS:.c=.o) $(SRCS:.cpp=.o))
 
-# macro expansion used for cleaning
+.SUFFIXES:
+.SUFFIXES: .c .cpp .d .o
+
 REBUILDABLES = $(OBJS) $(BINARY)
 
-# a rule for "all"
-all : $(OBJS) $(OBJDIR)/$(BINARY)
+.PHONY: all
+all: $(BINARY)
 	echo All done
 
-# link pattern matching rule; $@ matches the target; $^ matches all prerequisites
-$(OBJDIR)/$(BINARY): $(addprefix $(OBJDIR)/, $(OBJS))
-	$(CXX) -g $(CFLAGS) -o $@ $^ $(LDFLAGS)
+ifndef NO_DEPS
+.PHONY: depend
+depend: $(DEPS)
 
-# compile pattern matching rule; $@ pattern match target; @< pattern matched prerequisite
-$(OBJS): %.o: %.cpp
-	$(CXX) -g $(CXXFLAGS) -o $(OBJDIR)/$@ -c $<
+ifeq ($(findstring $(MAKECMDGOALS), clean distclean depend),)
+-include $(DEPS)
+endif
+endif
 
-# order only prerequisite
-$(OBJS): | $(OBJDIR)
+$(BINARY): $(OBJS)
+	$(CXX) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
 
-# rule for build directory
-$(OBJDIR):
-	mkdir $(OBJDIR)
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# a rule for "clean" the build environment
-clean :
+.cpp.d:
+	$(CXX) $(CXXFLAGS) -MM -MF $@ -MT $< -MT $@ -c $<
+
+.PHONY: clean
+clean:
 	del /S $(REBUILDABLES)
-	echo Clean done
+
+.PHONY: distclean
+distclean:
+	del /S $(DEPS) $(REBUILDABLES)
