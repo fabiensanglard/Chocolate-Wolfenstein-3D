@@ -24,4 +24,6 @@ Tested on Windows, Linux and Mac OS X
 
 Step by Step Mac OS X setup here: http://clubctrl.com/org/prog/wolf.html
 
+Windows Visual Studio 2013 setup here: http://richardssoftware.net/Home/Post/64
+
 Fabien Sanglard 
