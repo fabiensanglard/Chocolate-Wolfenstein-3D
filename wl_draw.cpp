@@ -276,7 +276,6 @@ int CalcHeight()
 
 byte *postsource;
 int postx;
-int postwidth;
 
 void ScalePost()
 {
@@ -372,7 +371,6 @@ void HitVertWall (void)
         ScalePost();
         wallheight[pixx] = CalcHeight();
         postsource+=texture-lasttexture;
-        postwidth=1;
         postx=pixx;
         lasttexture=texture;
         return;
@@ -386,7 +384,6 @@ void HitVertWall (void)
     lasttexture=texture;
     wallheight[pixx] = CalcHeight();
     postx = pixx;
-    postwidth = 1;
 
     if (tilehit & 0x40)
     {                                                               // check for adjacent doors
@@ -437,7 +434,6 @@ void HitHorizWall (void)
         ScalePost();
         wallheight[pixx] = CalcHeight();
         postsource+=texture-lasttexture;
-        postwidth=1;
         postx=pixx;
         lasttexture=texture;
         return;
@@ -451,7 +447,6 @@ void HitHorizWall (void)
     lasttexture=texture;
     wallheight[pixx] = CalcHeight();
     postx = pixx;
-    postwidth = 1;
 
     if (tilehit & 0x40)
     {                                                               // check for adjacent doors
@@ -498,7 +493,6 @@ void HitHorizDoor (void)
         ScalePost();
         wallheight[pixx] = CalcHeight();
         postsource+=texture-lasttexture;
-        postwidth=1;
         postx=pixx;
         lasttexture=texture;
         return;
@@ -511,7 +505,6 @@ void HitHorizDoor (void)
     lasttexture=texture;
     wallheight[pixx] = CalcHeight();
     postx = pixx;
-    postwidth = 1;
 
     switch(doorobjlist[doornum].lock)
     {
@@ -563,7 +556,6 @@ void HitVertDoor (void)
         ScalePost();
         wallheight[pixx] = CalcHeight();
         postsource+=texture-lasttexture;
-        postwidth=1;
         postx=pixx;
         lasttexture=texture;
         return;
@@ -576,7 +568,6 @@ void HitVertDoor (void)
     lasttexture=texture;
     wallheight[pixx] = CalcHeight();
     postx = pixx;
-    postwidth = 1;
 
     switch(doorobjlist[doornum].lock)
     {
