@@ -1846,11 +1846,12 @@ void CheckParameters(int argc, char *argv[])
             param_ignorenumchunks = true;
         else IFARG("--help")
             showHelp = true;
-        else hasError = true;
+        else {
+            printf("Unrecognized parameter: %s\n", arg);
+        }
     }
-    if(hasError || showHelp)
+    if(showHelp || hasError)
     {
-        if(hasError) printf("\n");
         printf(
             "Chocolate Wolfenstein 3D\n" //TODO: add version #? author credit? site link?
             "Based on Wolf4SDL, by Moritz \"Ripper\" Kroll (http://www.chaos-software.de.vu)\n"
@@ -1895,6 +1896,8 @@ void CheckParameters(int argc, char *argv[])
 #endif
             , defaultSampleRate
         );
+    }
+    if (hasError) {
         exit(1);
     }
 
