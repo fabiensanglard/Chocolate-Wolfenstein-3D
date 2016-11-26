@@ -9,7 +9,7 @@ Chocolate Wolf3D removes all the crap that was added over the years
 (snow, rain ...) in order to recreate the experience from 1993. 
 
 All other port display the framebuffer as 320x200 without accounting for the CRT 4:3
-distortion. Chocolate Wolfenstien 3D has a CRT emulator based on OpenGL:
+distortion. Chocolate Wolfenstein 3D has a CRT emulator based on OpenGL:
 
 Direct framebuffer to window (resulting in compressed image):
 
