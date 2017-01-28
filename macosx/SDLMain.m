@@ -5,7 +5,7 @@
     Feel free to customize this file to suit your needs
 */
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include "SDLMain.h"
 #include <sys/param.h> /* for MAXPATHLEN */
 #include <unistd.h>
@@ -50,7 +50,7 @@ static NSString *getApplicationName(void)
     dict = (const NSDictionary *)CFBundleGetInfoDictionary(CFBundleGetMainBundle());
     if (dict)
         appName = [dict objectForKey: @"CFBundleName"];
-
+    
     if (![appName length])
         appName = [[NSProcessInfo processInfo] processName];
 
@@ -130,10 +130,10 @@ static void setApplicationMenu(void)
     NSMenuItem *menuItem;
     NSString *title;
     NSString *appName;
-
+    
     appName = getApplicationName();
     appleMenu = [[NSMenu alloc] initWithTitle:@""];
-
+    
     /* Add menu items */
     title = [@"About " stringByAppendingString:appName];
     [appleMenu addItemWithTitle:title action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@""];
@@ -153,7 +153,7 @@ static void setApplicationMenu(void)
     title = [@"Quit " stringByAppendingString:appName];
     [appleMenu addItemWithTitle:title action:@selector(terminate:) keyEquivalent:@"q"];
 
-
+    
     /* Put menu into the menubar */
     menuItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
     [menuItem setSubmenu:appleMenu];
@@ -175,17 +175,17 @@ static void setupWindowMenu(void)
     NSMenuItem  *menuItem;
 
     windowMenu = [[NSMenu alloc] initWithTitle:@"Window"];
-
+    
     /* "Minimize" item */
     menuItem = [[NSMenuItem alloc] initWithTitle:@"Minimize" action:@selector(performMiniaturize:) keyEquivalent:@"m"];
     [windowMenu addItem:menuItem];
     [menuItem release];
-
+    
     /* Put menu into the menubar */
     windowMenuItem = [[NSMenuItem alloc] initWithTitle:@"Window" action:nil keyEquivalent:@""];
     [windowMenuItem setSubmenu:windowMenu];
     [[NSApp mainMenu] addItem:windowMenuItem];
-
+    
     /* Tell the application object that this is now the window menu */
     [NSApp setWindowsMenu:windowMenu];
 
@@ -202,7 +202,7 @@ static void CustomApplicationMain (int argc, char **argv)
 
     /* Ensure the application object is initialised */
     [NSApplication sharedApplication];
-
+    
 #ifdef SDL_USE_CPS
     {
         CPSProcessSerNum PSN;
@@ -222,10 +222,10 @@ static void CustomApplicationMain (int argc, char **argv)
     /* Create SDLMain and make it the app delegate */
     sdlMain = [[SDLMain alloc] init];
     [NSApp setDelegate:sdlMain];
-
+    
     /* Start the main event loop */
     [NSApp run];
-
+    
     [sdlMain release];
     [pool release];
 }
@@ -318,27 +318,27 @@ static void CustomApplicationMain (int argc, char **argv)
 
     bufferSize = selfLen + aStringLen - aRange.length;
     buffer = (unichar *)NSAllocateMemoryPages(bufferSize*sizeof(unichar));
-
+    
     /* Get first part into buffer */
     localRange.location = 0;
     localRange.length = aRange.location;
     [self getCharacters:buffer range:localRange];
-
+    
     /* Get middle part into buffer */
     localRange.location = 0;
     localRange.length = aStringLen;
     [aString getCharacters:(buffer+aRange.location) range:localRange];
-
+     
     /* Get last part into buffer */
     localRange.location = aRange.location + aRange.length;
     localRange.length = selfLen - localRange.location;
     [self getCharacters:(buffer+aRange.location+aStringLen) range:localRange];
-
+    
     /* Build output string */
     result = [NSString stringWithCharacters:buffer length:bufferSize];
-
+    
     NSDeallocateMemoryPages(buffer, bufferSize);
-
+    
     return result;
 }
 
@@ -351,12 +351,42 @@ static void CustomApplicationMain (int argc, char **argv)
 #endif
 
 
+static int IsRootCwd()
+{
+    char buf[MAXPATHLEN];
+    char *cwd = getcwd(buf, sizeof (buf));
+    return (cwd && (strcmp(cwd, "/") == 0));
+}
+
+static int IsTenPointNineOrLater()
+{
+    /* Gestalt() is deprecated in 10.8, but I don't care. Stop using SDL 1.2. */
+    SInt32 major, minor;
+    Gestalt(gestaltSystemVersionMajor, &major);
+    Gestalt(gestaltSystemVersionMinor, &minor);
+    return ( ((major << 16) | minor) >= ((10 << 16) | 9) );
+}
+
+static int IsFinderLaunch(const int argc, char **argv)
+{
+    const int bIsNewerOS = IsTenPointNineOrLater();
+    /* -psn_XXX is passed if we are launched from Finder in 10.8 and earlier */
+    if ( (!bIsNewerOS) && (argc >= 2) && (strncmp(argv[1], "-psn", 4) == 0) ) {
+        return 1;
+    } else if ((bIsNewerOS) && (argc == 1) && IsRootCwd()) {
+        /* we might still be launched from the Finder; on 10.9+, you might not
+        get the -psn command line anymore. Check version, if there's no
+        command line, and if our current working directory is "/". */
+        return 1;
+    }
+    return 0;  /* not a Finder launch. */
+}
+
 /* Main entry point to executable - should *not* be SDL_main! */
 int main (int argc, char **argv)
 {
     /* Copy the arguments into a global variable */
-    /* This is passed if we are launched by double-clicking */
-    if ( argc >= 2 && strncmp (argv[1], "-psn", 4) == 0 ) {
+    if (IsFinderLaunch(argc, argv)) {
         gArgv = (char **) SDL_malloc(sizeof (char *) * 2);
         gArgv[0] = argv[0];
         gArgv[1] = NULL;
