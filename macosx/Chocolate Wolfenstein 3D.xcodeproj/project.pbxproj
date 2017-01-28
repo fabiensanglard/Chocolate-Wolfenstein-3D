@@ -12,6 +12,8 @@
 		2DE6049319AD7921008724EB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE6049219AD7921008724EB /* OpenGL.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		94C520181A31A0780085B99E /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
+		94C520191A31A0780085B99E /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D901F4C10FC0DB520040C290 /* SDL_mixer.framework */; };
 		D901F4FD0FC0DBCB0040C290 /* fmopl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4CB0FC0DBCB0040C290 /* fmopl.cpp */; };
 		D901F4FE0FC0DBCB0040C290 /* id_pm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4CC0FC0DBCB0040C290 /* id_pm.cpp */; };
 		D901F5000FC0DBCB0040C290 /* wl_inter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D901F4CF0FC0DBCB0040C290 /* wl_inter.cpp */; };
@@ -112,6 +114,8 @@
 			files = (
 				2DE6049319AD7921008724EB /* OpenGL.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				94C520181A31A0780085B99E /* SDL.framework in Frameworks */,
+				94C520191A31A0780085B99E /* SDL_mixer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +356,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -371,6 +379,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -403,14 +415,10 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/Library/Frameworks/SDL.framework/Headers",
 					/Library/Frameworks/SDL.framework/Headers,
-					"$(HOME)/Library/Frameworks/SDL.framework/Headers/SDL_mixer",
-					/Library/Frameworks/SDL.framework/Headers/SDL_mixer,
+					"$(HOME)/Library/Frameworks/SDL_mixer.framework/Headers",
+					/Library/Frameworks/SDL_mixer.framework/Headers,
 					"$(HEADER_SEARCH_PATHS)",
 					/usr/local/include,
-				);
-				OTHER_LDFLAGS = (
-					"-lSDL",
-					"-lSDL_mixer",
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx;
@@ -436,16 +444,12 @@
 				HEADER_SEARCH_PATHS = (
 					"$(HOME)/Library/Frameworks/SDL.framework/Headers",
 					/Library/Frameworks/SDL.framework/Headers,
-					"$(HOME)/Library/Frameworks/SDL.framework/Headers/SDL_mixer",
-					/Library/Frameworks/SDL.framework/Headers/SDL_mixer,
+					"$(HOME)/Library/Frameworks/SDL_mixer.framework/Headers",
+					/Library/Frameworks/SDL_mixer.framework/Headers,
 					"$(HEADER_SEARCH_PATHS)",
 					/usr/local/include,
 				);
 				LLVM_LTO = YES;
-				OTHER_LDFLAGS = (
-					"-lSDL",
-					"-lSDL_mixer",
-				);
 				PREBINDING = NO;
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
