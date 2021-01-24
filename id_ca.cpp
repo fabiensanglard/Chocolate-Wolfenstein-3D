@@ -15,13 +15,23 @@ loaded into the data segment
 */
 
 #include <sys/types.h>
-#if defined _WIN32
-    #include <io.h>
-#else
-    #include <sys/uio.h>
-    #include <unistd.h>
-#endif
+#include <unistd.h>
+/*
+    "Is this available on Windows now?"
+    It is in mingw-w64
+    https://github.com/Alexpux/mingw-w64/blob/master/mingw-w64-headers/crt/unistd.h
 
+    mingw-w64 is used by MSYS2
+    MSYS2 is easiest way to build cross platform code bases on windows these days (in my experience)
+    Chocolate Doom uses it
+    https://www.chocolate-doom.org/wiki/index.php/Building_Chocolate_Doom_on_Windows
+    (I've used msys2 to build nBlood, Chocolate Doom, cc65, probably a few other codebases I've forgotten)
+
+    Msys2 doesn't introduce a dll like cygwin, it just provides a *nix like environment for building.
+    Also uses pacman as a package manager which makes installing dev libraries for a build painless.
+
+    My main development setup has been Windows 10, VS Code with C++ extension, and MSYS2 console.
+*/
 #include "wl_def.h"
 #pragma hdrstop
 
@@ -40,13 +50,13 @@ typedef struct
     word bit0,bit1;       // 0-255 is a character, > is a pointer to a node
 } huffnode;
 
-
+#pragma pack(push, 1)
 typedef struct
 {
     word RLEWtag;
     int32_t headeroffsets[100];
 } mapfiletype;
-
+#pragma pack(pop)
 
 /*
 =============================================================================
@@ -560,6 +570,7 @@ void CAL_SetupMapFile (void)
     length = NUMMAPS*4+2; // used to be "filelength(handle);"
     mapfiletype *tinf=(mapfiletype *) malloc(sizeof(mapfiletype));
     CHECKMALLOCRESULT(tinf);
+    //this is probably why pragma pack is needed on mapfiletype
     read(handle, tinf, length);
     close(handle);
 
@@ -589,6 +600,7 @@ void CAL_SetupMapFile (void)
 //
     for (i=0;i<NUMMAPS;i++)
     {
+        //if mapfiletype not pragma packed, member headeroffsets will access incorrect memory 
         pos = tinf->headeroffsets[i];
         if (pos<0)                          // $FFFFFFFF start is a sparse map
             continue;

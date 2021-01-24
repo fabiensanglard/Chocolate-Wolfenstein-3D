@@ -191,8 +191,8 @@ void
 US_PrintSigned(int32_t n)
 {
     char    buffer[32];
-
-    US_Print(ltoa(n,buffer,10));
+    sprintf(buffer, "%ld", n);
+    US_Print(buffer);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -674,7 +674,7 @@ US_LineInput(int x,int y,char *buf,const char *def,boolean escok,
                     cursormoved = true;
                     break;
 
-                case SDLK_KP5: //0x4c:  // Keypad 5 // TODO: hmmm...
+                case SDLK_KP_5: //0x4c:  // Keypad 5 // TODO: hmmm...
                 case sc_UpArrow:
                 case sc_DownArrow:
                 case sc_PgUp:

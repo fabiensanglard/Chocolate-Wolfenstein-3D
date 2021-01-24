@@ -2,15 +2,7 @@
 
 #include <math.h>
 #include "wl_def.h"
-// Win32
-#ifdef _WIN32
 #include "SDL_mixer.h"
-#elif __linux__
-#include <SDL/SDL_mixer.h>
-#else
-#include <SDL/SDL_mixer.h>
-#endif
-
 
 #pragma hdrstop
 
@@ -931,7 +923,7 @@ void LatchNumberHERE (int x, int y, unsigned width, int32_t number)
     unsigned length,c;
     char str[20];
 
-    ltoa (number,str,10);
+    sprintf(str, "%ld", number);
 
     length = (unsigned) strlen (str);
 

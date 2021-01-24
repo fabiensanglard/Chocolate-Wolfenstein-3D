@@ -231,14 +231,14 @@ void LoadLatchMem (void)
 //
 // tile 8s
 //
-    
-    surf = SDL_CreateRGBSurface(SDL_HWSURFACE, 8*8,
+
+    surf = SDL_CreateRGBSurface(0, 8*8,
         ((NUMTILE8 + 7) / 8) * 8, 8, 0, 0, 0, 0);
     if(surf == NULL)
     {
         Quit("Unable to create surface for tiles!");
     }
-    SDL_SetColors(surf, gamepal, 0, 256);
+    SDL_SetPaletteColors(surf->format->palette, gamepal, 0, 256);
 
     latchpics[0] = surf;
     CA_CacheGrChunk (STARTTILE8);
@@ -261,12 +261,13 @@ void LoadLatchMem (void)
     {
         width = pictable[i-STARTPICS].width;
         height = pictable[i-STARTPICS].height;
-        surf = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, 8, 0, 0, 0, 0);
+
+        surf = SDL_CreateRGBSurface(0, width, height, 8, 0, 0, 0, 0);
         if(surf == NULL)
         {
             Quit("Unable to create surface for picture!");
         }
-        SDL_SetColors(surf, gamepal, 0, 256);
+        SDL_SetPaletteColors(surf->format->palette, gamepal, 0, 256);
 
         latchpics[2+i-start] = surf;
         CA_CacheGrChunk (i);

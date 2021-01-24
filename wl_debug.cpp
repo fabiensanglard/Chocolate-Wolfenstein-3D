@@ -1,10 +1,6 @@
 // WL_DEBUG.C
 
-#ifdef _WIN32
-    #include <io.h>
-#else
-    #include <unistd.h>
-#endif
+#include <unistd.h>
 
 #include "wl_def.h"
 #pragma hdrstop
@@ -403,7 +399,7 @@ void ShapeTest (void)
             case sc_Escape:
                 done = true;
                 break;
-/*            case sc_Enter:
+/*            case sc_Return:
                 PM_GetPage(i);
                 break;*/
         }

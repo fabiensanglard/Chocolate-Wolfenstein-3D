@@ -9,3 +9,15 @@ xcuserdata
 Debug
 Release
 Backup
+
+*.o
+*.d
+*.wl6
+
+*.exe
+*.txt
+*.s
+*.ii
+
+/.vscode
+/build
