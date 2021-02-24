@@ -13,7 +13,7 @@ INSTALL_MAN     ?= $(INSTALL) -m 444
 INSTALL_DATA    ?= $(INSTALL) -m 444
 
 
-SDL_CONFIG  ?= sdl-config
+SDL_CONFIG  ?= sdl2-config
 CFLAGS_SDL  ?= $(shell $(SDL_CONFIG) --cflags)
 LDFLAGS_SDL ?= $(shell $(SDL_CONFIG) --libs)
 
@@ -22,13 +22,17 @@ CFLAGS += $(CFLAGS_SDL)
 
 #CFLAGS += -Wall
 #CFLAGS += -W
+CFLAGS += -g
 CFLAGS += -Wpointer-arith
 CFLAGS += -Wreturn-type
 CFLAGS += -Wwrite-strings
 CFLAGS += -Wcast-align
 
+ifeq ($(CXX), clang++)
+	CFLAGS += -Wno-c++11-narrowing
+endif
+
 CCFLAGS += $(CFLAGS)
-CCFLAGS += -std=gnu99
 CCFLAGS += -Werror-implicit-function-declaration
 CCFLAGS += -Wimplicit-int
 CCFLAGS += -Wsequence-point
@@ -36,12 +40,7 @@ CCFLAGS += -Wsequence-point
 CXXFLAGS += $(CFLAGS)
 
 LDFLAGS += $(LDFLAGS_SDL)
-ifeq ($(UNAME), Darwin)
-	LDFLAGS += -lSDL_mixer -framework OpenGL
-endif
-ifeq ($(UNAME), Linux)
-	LDFLAGS += -lSDL_mixer -lGL
-endif
+LDFLAGS += -lSDL2_mixer
 
 SRCS :=
 SRCS += fmopl.cpp

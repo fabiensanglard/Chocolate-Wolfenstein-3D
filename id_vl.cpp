@@ -29,8 +29,12 @@ unsigned screenBits = -1;      // use "best" color depth according to libSDL
 SDL_Surface *screen = NULL;
 unsigned screenPitch;
 
+SDL_Window *window = NULL;
+
 SDL_Surface *screenBuffer = NULL;
 unsigned bufferPitch;
+
+SDL_Renderer *renderer = NULL;
 
 SDL_Surface *curSurface = NULL;
 unsigned curPitch;
@@ -70,7 +74,13 @@ CASSERT(lengthof(gamepal) == 256)
 
 void    VL_Shutdown (void)
 {
-    //VL_SetTextMode ();
+    SDL_FreeSurface(screen);
+    SDL_FreeSurface(screenBuffer);
+    for(auto &surface : latchpics) {
+        SDL_FreeSurface(surface);
+    }
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
 }
 
 
@@ -85,54 +95,47 @@ void    VL_Shutdown (void)
 void    VL_SetVGAPlaneMode (void)
 {
 #ifdef SPEAR
-    SDL_WM_SetCaption("Spear of Destiny", NULL);
+    const char* title = "Spear of Destiny";
 #else
-    SDL_WM_SetCaption("Wolfenstein 3D", NULL);
+    const char* title = "Wolfenstein 3D";
 #endif
-
-    if(screenBits == -1)
-    {
-        const SDL_VideoInfo *vidInfo = SDL_GetVideoInfo();
-        screenBits = vidInfo->vfmt->BitsPerPixel;
-    }
 
     //Fab's CRT Hack
     //Adjust height so the screen is 4:3 aspect ratio
     screenHeight=screenWidth * 3.0/4.0;
     
-    screen = SDL_SetVideoMode(screenWidth, screenHeight, screenBits,
-          (usedoublebuffering ? SDL_HWSURFACE | SDL_DOUBLEBUF : 0)
-        | (screenBits == 8 ? SDL_HWPALETTE : 0)
-        | (fullscreen ? SDL_FULLSCREEN : 0) | SDL_OPENGL | SDL_OPENGLBLIT);
-    
+    window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight,
+        (fullscreen ? SDL_WINDOW_FULLSCREEN : 0) | SDL_WINDOW_OPENGL);
+
+    screen = SDL_GetWindowSurface(window);
     
     if(!screen)
     {
         printf("Unable to set %ix%ix%i video mode: %s\n", screenWidth, screenHeight, screenBits, SDL_GetError());
         exit(1);
     }
-    if((screen->flags & SDL_DOUBLEBUF) != SDL_DOUBLEBUF)
-        usedoublebuffering = false;
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+
     SDL_ShowCursor(SDL_DISABLE);
 
-    SDL_SetColors(screen, gamepal, 0, 256);
+    SDL_SetPaletteColors(screen->format->palette, gamepal, 0, 256);
     memcpy(curpal, gamepal, sizeof(SDL_Color) * 256);
-
-    //Fab's CRT Hack
-    CRT_Init(screenWidth);
     
     //Fab's CRT Hack
     screenWidth=320;
     screenHeight=200;
     
-    screenBuffer = SDL_CreateRGBSurface(SDL_SWSURFACE, screenWidth,
+    screenBuffer = SDL_CreateRGBSurface(0, screenWidth,
         screenHeight, 8, 0, 0, 0, 0);
     if(!screenBuffer)
     {
         printf("Unable to create screen buffer surface: %s\n", SDL_GetError());
         exit(1);
     }
-    SDL_SetColors(screenBuffer, gamepal, 0, 256);
+    SDL_SetPaletteColors(screenBuffer->format->palette, gamepal, 0, 256);
 
     screenPitch = screen->pitch;
     bufferPitch = screenBuffer->pitch;
@@ -219,10 +222,10 @@ void VL_SetColor    (int color, int red, int green, int blue)
     curpal[color] = col;
 
     if(screenBits == 8)
-        SDL_SetPalette(screen, SDL_PHYSPAL, &col, color, 1);
+        SDL_SetPaletteColors(screen->format->palette, &col, color, 1);
     else
     {
-        SDL_SetPalette(curSurface, SDL_LOGPAL, &col, color, 1);
+        SDL_SetPaletteColors(curSurface->format->palette, &col, color, 1);
         SDL_BlitSurface(screenBuffer, NULL, screen, NULL);
         SDL_Flip(screen);
     }
@@ -261,10 +264,10 @@ void VL_SetPalette (SDL_Color *palette, bool forceupdate)
     memcpy(curpal, palette, sizeof(SDL_Color) * 256);
 
     if(screenBits == 8)
-        SDL_SetPalette(screen, SDL_PHYSPAL, palette, 0, 256);
+        SDL_SetPaletteColors(screen->format->palette, palette, 0, 256);
     else
     {
-        SDL_SetPalette(curSurface, SDL_LOGPAL, palette, 0, 256);
+        SDL_SetPaletteColors(curSurface->format->palette, palette, 0, 256);
         if(forceupdate)
         {
             SDL_BlitSurface(screenBuffer, NULL, screen, NULL);

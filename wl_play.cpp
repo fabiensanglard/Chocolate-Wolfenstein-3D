@@ -206,7 +206,7 @@ int songs[] = {
     XFUNKIE_MUS,
     XDEATH_MUS,
     XGETYOU_MUS,                // DON'T KNOW
-    ULTIMATE_MUS,               // Trans Grîsse
+    ULTIMATE_MUS,               // Trans Gr√∂sse
 
     DUNGEON_MUS,
     GOINGAFT_MUS,
@@ -335,12 +335,7 @@ void PollMouseMove (void)
 {
     int mousexmove, mouseymove;
 
-    SDL_GetMouseState(&mousexmove, &mouseymove);
-    if(IN_IsInputGrabbed())
-        IN_CenterMouse();
-
-    mousexmove -= screenWidth / 2;
-    mouseymove -= screenHeight / 2;
+    SDL_GetRelativeMouseState(&mousexmove, &mouseymove);
 
     controlx += mousexmove * 10 / (13 - mouseadjustment);
     controly += mouseymove * 20 / (13 - mouseadjustment);
@@ -668,8 +663,6 @@ void CheckKeys (void)
         IN_Ack ();
         Paused = false;
         ContinueMusic(lastoffs);
-        if (MousePresent && IN_IsInputGrabbed())
-            IN_CenterMouse();     // Clear accumulated mouse movement
         lasttimecount = GetTimeCount();
         return;
     }
@@ -712,8 +705,6 @@ void CheckKeys (void)
         if (loadedgame)
             playstate = ex_abort;
         lasttimecount = GetTimeCount();
-        if (MousePresent && IN_IsInputGrabbed())
-            IN_CenterMouse();     // Clear accumulated mouse movement
         return;
     }
 
@@ -728,9 +719,6 @@ void CheckKeys (void)
         SETFONTCOLOR (0, 15);
         if (DebugKeys () && viewsize < 20)
             DrawPlayBorder ();       // dont let the blue borders flash
-
-        if (MousePresent && IN_IsInputGrabbed())
-            IN_CenterMouse();     // Clear accumulated mouse movement
 
         lasttimecount = GetTimeCount();
         return;
@@ -1263,9 +1251,6 @@ void PlayLoop (void)
     funnyticount = 0;
     memset (buttonstate, 0, sizeof (buttonstate));
     ClearPaletteShifts ();
-
-    if (MousePresent && IN_IsInputGrabbed())
-        IN_CenterMouse();         // Clear accumulated mouse movement
 
     if (demoplayback)
         IN_StartAck ();

@@ -7,13 +7,7 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#ifdef _WIN32
-    #include <io.h>
-    #include <direct.h>
-#else
-    #include <unistd.h>
-#endif
-
+#include <unistd.h>
 #include "wl_def.h"
 #pragma hdrstop
 
@@ -331,53 +325,6 @@ static byte *ExtScanNames[] =   // Names corresponding to ExtScanCodes
         "PrtSc","Alt","Home","PgUp","End","PgDn","Ins","Del","NumLk","Up",
         "Down","Left","Right",""
                                         };*/
-
-#else
-static const char* const ScanNames[SDLK_LAST] =
-    {
-        "?","?","?","?","?","?","?","?",                                //   0
-        "BkSp","Tab","?","?","?","Return","?","?",                      //   8
-        "?","?","?","Pause","?","?","?","?",                            //  16
-        "?","?","?","Esc","?","?","?","?",                              //  24
-        "Space","!","\"","#","$","?","&","'",                           //  32
-        "(",")","*","+",",","-",".","/",                                //  40
-        "0","1","2","3","4","5","6","7",                                //  48
-        "8","9",":",";","<","=",">","?",                                //  56
-        "@","A","B","C","D","E","F","G",                                //  64
-        "H","I","J","K","L","M","N","O",                                //  72
-        "P","Q","R","S","T","U","V","W",                                //  80
-        "X","Y","Z","[","\\","]","^","_",                               //  88
-        "`","a","b","c","d","e","f","h",                                //  96
-        "h","i","j","k","l","m","n","o",                                // 104
-        "p","q","r","s","t","u","v","w",                                // 112
-        "x","y","z","{","|","}","~","?",                                // 120
-        "?","?","?","?","?","?","?","?",                                // 128
-        "?","?","?","?","?","?","?","?",                                // 136
-        "?","?","?","?","?","?","?","?",                                // 144
-        "?","?","?","?","?","?","?","?",                                // 152
-        "?","?","?","?","?","?","?","?",                                // 160
-        "?","?","?","?","?","?","?","?",                                // 168
-        "?","?","?","?","?","?","?","?",                                // 176
-        "?","?","?","?","?","?","?","?",                                // 184
-        "?","?","?","?","?","?","?","?",                                // 192
-        "?","?","?","?","?","?","?","?",                                // 200
-        "?","?","?","?","?","?","?","?",                                // 208
-        "?","?","?","?","?","?","?","?",                                // 216
-        "?","?","?","?","?","?","?","?",                                // 224
-        "?","?","?","?","?","?","?","?",                                // 232
-        "?","?","?","?","?","?","?","?",                                // 240
-        "?","?","?","?","?","?","?","?",                                // 248
-        "?","?","?","?","?","?","?","?",                                // 256
-        "?","?","?","?","?","?","?","Enter",                            // 264
-        "?","Up","Down","Right","Left","Ins","Home","End",              // 272
-        "PgUp","PgDn","F1","F2","F3","F4","F5","F6",                    // 280
-        "F7","F8","F9","F10","F11","F12","?","?",                       // 288
-        "?","?","?","?","NumLk","CapsLk","ScrlLk","RShft",              // 296
-        "Shift","RCtrl","Ctrl","RAlt","Alt","?","?","?",                // 304
-        "?","?","?","?","PrtSc","?","?","?",                            // 312
-        "?","?"                                                         // 320
-    };
-
 #endif
 
 ////////////////////////////////////////////////////////////////////
@@ -807,9 +754,6 @@ CP_CheckQuick (ScanCode scancode)
                     playstate = ex_abort;
                 lasttimecount = GetTimeCount ();
 
-                if (MousePresent && IN_IsInputGrabbed())
-                    IN_CenterMouse();     // Clear accumulated mouse movement
-
 #ifndef SPEAR
                 UNCACHEGRCHUNK (C_CURSOR1PIC);
                 UNCACHEGRCHUNK (C_CURSOR2PIC);
@@ -878,9 +822,6 @@ CP_CheckQuick (ScanCode scancode)
                     playstate = ex_abort;
 
                 lasttimecount = GetTimeCount ();
-
-                if (MousePresent && IN_IsInputGrabbed())
-                    IN_CenterMouse();     // Clear accumulated mouse movement
 
 #ifndef SPEAR
                 UNCACHEGRCHUNK (C_CURSOR1PIC);
@@ -1831,8 +1772,6 @@ CP_Control (int)
         {
             case CTL_MOUSEENABLE:
                 mouseenabled ^= 1;
-                if(IN_IsInputGrabbed())
-                    IN_CenterMouse();
                 DrawCtlScreen ();
                 CusItems.curpos = -1;
                 ShootSnd ();
@@ -1965,7 +1904,7 @@ MouseSensitivity (int)
                 break;
         }
 
-        if (ci.button0 || Keyboard[sc_Space] || Keyboard[sc_Enter])
+        if (ci.button0 || Keyboard[sc_Space] || Keyboard[sc_Return])
             exit = 1;
         else if (ci.button1 || Keyboard[sc_Escape])
             exit = 2;
@@ -2206,7 +2145,7 @@ EnterCtrlData (int index, CustomCtrls * cust, void (*DrawRtn) (int), void (*Prin
         ReadAnyControl (&ci);
 
         if (type == MOUSE || type == JOYSTICK)
-            if (IN_KeyDown (sc_Enter) || IN_KeyDown (sc_Control) || IN_KeyDown (sc_Alt))
+            if (IN_KeyDown (sc_Return) || IN_KeyDown (sc_Control) || IN_KeyDown (sc_Alt))
             {
                 IN_ClearKeysDown ();
                 ci.button0 = ci.button1 = false;
@@ -2216,7 +2155,7 @@ EnterCtrlData (int index, CustomCtrls * cust, void (*DrawRtn) (int), void (*Prin
         // CHANGE BUTTON VALUE?
         //
         if ((type != KEYBOARDBTNS && type != KEYBOARDMOVE) && (ci.button0 | ci.button1 | ci.button2 | ci.button3) ||
-            ((type == KEYBOARDBTNS || type == KEYBOARDMOVE) && LastScan == sc_Enter))
+            ((type == KEYBOARDBTNS || type == KEYBOARDMOVE) && LastScan == sc_Return))
         {
             lastFlashTime = GetTimeCount();
             tick = picked = 0;
@@ -2842,7 +2781,7 @@ CP_ChangeView (int)
                 break;
         }
 
-        if (ci.button0 || Keyboard[sc_Enter])
+        if (ci.button0 || Keyboard[sc_Return])
             exit = 1;
         else if (ci.button1 || Keyboard[sc_Escape])
         {
@@ -3125,12 +3064,6 @@ SetupControlPanel (void)
         CA_LoadAllSounds ();
     else
         MainMenu[savegame].active = 1;
-
-    //
-    // CENTER MOUSE
-    //
-    if(IN_IsInputGrabbed())
-        IN_CenterMouse();
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -3369,7 +3302,7 @@ HandleMenu (CP_iteminfo * item_i, CP_itemtype * items, void (*routine) (int w))
                 break;
         }
 
-        if (ci.button0 || Keyboard[sc_Space] || Keyboard[sc_Enter])
+        if (ci.button0 || Keyboard[sc_Space] || Keyboard[sc_Return])
             exit = 1;
 
         if (ci.button1 && !Keyboard[sc_Alt] || Keyboard[sc_Escape])
@@ -3564,7 +3497,7 @@ WaitKeyUp (void)
     ControlInfo ci;
     while (ReadAnyControl (&ci), ci.button0 |
            ci.button1 |
-           ci.button2 | ci.button3 | Keyboard[sc_Space] | Keyboard[sc_Enter] | Keyboard[sc_Escape])
+           ci.button2 | ci.button3 | Keyboard[sc_Space] | Keyboard[sc_Return] | Keyboard[sc_Escape])
     {
         IN_WaitAndProcessEvents();
     }
@@ -3576,6 +3509,7 @@ WaitKeyUp (void)
 // READ KEYBOARD, JOYSTICK AND MOUSE FOR INPUT
 //
 ////////////////////////////////////////////////////////////////////
+static int totalMousex = 0, totalMousey = 0;
 void
 ReadAnyControl (ControlInfo * ci)
 {
@@ -3586,37 +3520,42 @@ ReadAnyControl (ControlInfo * ci)
     if (mouseenabled && IN_IsInputGrabbed())
     {
         int mousex, mousey, buttons;
-        buttons = SDL_GetMouseState(&mousex, &mousey);
+        buttons = SDL_GetRelativeMouseState(&mousex, &mousey);
         int middlePressed = buttons & SDL_BUTTON(SDL_BUTTON_MIDDLE);
         int rightPressed = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT);
         buttons &= ~(SDL_BUTTON(SDL_BUTTON_MIDDLE) | SDL_BUTTON(SDL_BUTTON_RIGHT));
         if(middlePressed) buttons |= 1 << 2;
         if(rightPressed) buttons |= 1 << 1;
 
-        if(mousey - CENTERY < -SENSITIVE)
+        totalMousex += mousex;
+        totalMousey += mousey;
+
+        if(totalMousey < -SENSITIVE)
         {
             ci->dir = dir_North;
             mouseactive = 1;
         }
-        else if(mousey - CENTERY > SENSITIVE)
+        else if(totalMousey > SENSITIVE)
         {
             ci->dir = dir_South;
             mouseactive = 1;
         }
 
-        if(mousex - CENTERX < -SENSITIVE)
+        if(totalMousex < -SENSITIVE)
         {
             ci->dir = dir_West;
             mouseactive = 1;
         }
-        else if(mousex - CENTERX > SENSITIVE)
+        else if(totalMousex > SENSITIVE)
         {
             ci->dir = dir_East;
             mouseactive = 1;
         }
 
-        if(mouseactive)
-            IN_CenterMouse();
+        if(mouseactive) {
+            totalMousex = 0;
+            totalMousey = 0;
+        }
 
         if (buttons)
         {
@@ -3871,14 +3810,212 @@ FreeMusic (void)
 const char *
 IN_GetScanName (ScanCode scan)
 {
-/*    const char **p;
-    ScanCode *s;
-
-    for (s = ExtScanCodes, p = ExtScanNames; *s; p++, s++)
-        if (*s == scan)
-            return (*p);*/
-
-    return (ScanNames[scan]);
+    switch(scan) {
+        case(SDLK_BACKSPACE):
+            return "BkSp";
+        case(SDLK_TAB):
+            return "Tab";
+        case(SDLK_RETURN):
+            return "Enter";
+        case(SDLK_PAUSE):
+            return "Pause";
+        case(SDLK_ESCAPE):
+            return "Esc";
+        case(SDLK_SPACE):
+            return "Space";
+        case(SDLK_EXCLAIM):
+            return "!";
+        case(SDLK_QUOTEDBL):
+            return "\"";
+        case(SDLK_HASH):
+            return "#";
+        case(SDLK_DOLLAR):
+            return "$";
+        case(SDLK_AMPERSAND):
+            return "&";
+        case(SDLK_QUOTE):
+            return "'";
+        case(SDLK_LEFTPAREN):
+            return "(";
+        case(SDLK_RIGHTPAREN):
+            return ")";
+        case(SDLK_ASTERISK):
+            return "*";
+        case(SDLK_PLUS):
+            return "+";
+        case(SDLK_COMMA):
+            return ",";
+        case(SDLK_MINUS):
+            return "-";
+        case(SDLK_PERIOD):
+            return ".";
+        case(SDLK_SLASH):
+            return "/";
+        case(SDLK_0):
+            return "0";
+        case(SDLK_1):
+            return "1";
+        case(SDLK_2):
+            return "2";
+        case(SDLK_3):
+            return "3";
+        case(SDLK_4):
+            return "4";
+        case(SDLK_5):
+            return "5";
+        case(SDLK_6):
+            return "6";
+        case(SDLK_7):
+            return "7";
+        case(SDLK_8):
+            return "8";
+        case(SDLK_9):
+            return "9";
+        case(SDLK_COLON):
+            return ":";
+        case(SDLK_SEMICOLON):
+            return ";";
+        case(SDLK_LESS):
+            return "<";
+        case(SDLK_EQUALS):
+            return "=";
+        case(SDLK_GREATER):
+            return ">";
+        case(SDLK_QUESTION):
+            return "?";
+        case(SDLK_AT):
+            return "@";
+        case(SDLK_a):
+            return "A";
+        case(SDLK_b):
+            return "B";
+        case(SDLK_c):
+            return "C";
+        case(SDLK_d):
+            return "D";
+        case(SDLK_e):
+            return "E";
+        case(SDLK_f):
+            return "F";
+        case(SDLK_g):
+            return "G";
+        case(SDLK_h):
+            return "H";
+        case(SDLK_i):
+            return "I";
+        case(SDLK_j):
+            return "J";
+        case(SDLK_k):
+            return "K";
+        case(SDLK_l):
+            return "L";
+        case(SDLK_m):
+            return "M";
+        case(SDLK_n):
+            return "N";
+        case(SDLK_o):
+            return "O";
+        case(SDLK_p):
+            return "P";
+        case(SDLK_q):
+            return "Q";
+        case(SDLK_r):
+            return "R";
+        case(SDLK_s):
+            return "S";
+        case(SDLK_t):
+            return "T";
+        case(SDLK_u):
+            return "U";
+        case(SDLK_v):
+            return "V";
+        case(SDLK_w):
+            return "W";
+        case(SDLK_x):
+            return "X";
+        case(SDLK_y):
+            return "Y";
+        case(SDLK_z):
+            return "Z";
+        case(SDLK_LEFTBRACKET):
+            return "[";
+        case(SDLK_BACKSLASH):
+            return "\\";
+        case(SDLK_RIGHTBRACKET):
+            return "]";
+        case(SDLK_CARET):
+            return "^";
+        case(SDLK_UNDERSCORE):
+            return "_";
+        case(SDLK_BACKQUOTE):
+            return "`";
+        case(SDLK_UP):
+            return "Up";
+        case(SDLK_DOWN):
+            return "Down";
+        case(SDLK_RIGHT):
+            return "Right";
+        case(SDLK_LEFT):
+            return "Left";
+        case(SDLK_INSERT):
+            return "Ins";
+        case(SDLK_HOME):
+            return "Home";
+        case(SDLK_END):
+            return "End";
+        case(SDLK_PAGEUP):
+            return "PgUp";
+        case(SDLK_PAGEDOWN):
+            return "PgDn";
+        case(SDLK_DELETE):
+            return "Del";
+        case(SDLK_F1):
+            return "F1";
+        case(SDLK_F2):
+            return "F2";
+        case(SDLK_F3):
+            return "F3";
+        case(SDLK_F4):
+            return "F4";
+        case(SDLK_F5):
+            return "F5";
+        case(SDLK_F6):
+            return "F6";
+        case(SDLK_F7):
+            return "F7";
+        case(SDLK_F8):
+            return "F8";
+        case(SDLK_F9):
+            return "F9";
+        case(SDLK_F10):
+            return "F10";
+        case(SDLK_F11):
+            return "F11";
+        case(SDLK_F12):
+            return "F12";
+        case(SDLK_NUMLOCKCLEAR):
+            return "NumLk";
+        case(SDLK_CAPSLOCK):
+            return "CapsLk";
+        case(SDLK_SCROLLLOCK):
+            return "ScrlLk";
+        case(SDLK_RSHIFT):
+            return "RShft";
+        case(SDLK_LSHIFT):
+            return "Shift";
+        case(SDLK_RCTRL):
+            return "RCtrl";
+        case(SDLK_LCTRL):
+            return "Ctrl";
+        case(SDLK_RALT):
+            return "RAlt";
+        case(SDLK_LALT):
+            return "Alt";
+        case(SDLK_PRINTSCREEN):
+            return "PrtSc";
+        default:
+            return "?";
+    }
 }
 
 
@@ -3986,7 +4123,7 @@ CheckForEpisodes (void)
         if(stat(configdir, &statbuf) != 0)
         {
 #ifdef _WIN32
-            if(_mkdir(configdir) != 0)
+            if(mkdir(configdir) != 0)
 #else
             if(mkdir(configdir, 0755) != 0)
 #endif

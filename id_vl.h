@@ -2,9 +2,6 @@
 
 // wolf compatability
 
-// Win32
-//#ifndef ID_VL.H 
-//#define ID_VL.H
 #ifndef ID_VL_H 
 #define ID_VL_H
 
@@ -20,6 +17,8 @@ void Quit (const char *error,...);
 //===========================================================================
 
 extern SDL_Surface *screen, *screenBuffer, *curSurface;
+extern SDL_Window *window;
+extern SDL_Renderer *renderer;
 
 extern  boolean  fullscreen, usedoublebuffering;
 extern  unsigned screenWidth, screenHeight, screenBits, screenPitch, bufferPitch, curPitch;

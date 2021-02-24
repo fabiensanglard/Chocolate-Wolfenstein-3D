@@ -1,3 +1,4 @@
+
 #ifndef WL_DEF_H
 #define WL_DEF_H
 
@@ -10,27 +11,30 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-// Win32
-#ifdef _WIN32
-#include <wtypes.h>
-#include "SDL.h"
-#include "SDL_syswm.h"
-#endif
-#if !defined(_WIN32)
-#   include <stdint.h>
-#   include <string.h>
-#   include <stdarg.h>
-#include <SDL/SDL.h>
 
-#endif
+#include "SDL.h"
+#include <stdint.h>
+#include <string.h>
+#include <stdarg.h>
+
 
 
 #if !defined O_BINARY
 #   define O_BINARY 0
 #endif
 
-#pragma pack(1)
+/*
+the pragma pack(1) that was here
+caused problems when linking to std.
+std::pairs for exampled ended up packed
+but the compiled library so/dll
+uses normal offsets naturally.
 
+gcc and libstdc++ work fine now.
+
+delete any old config file and don't load old saves
+they will not load right in a new build
+*/
 
 #define YESBUTTONNAME "Y"
 #define NOBUTTONNAME  "N"
@@ -54,15 +58,14 @@
     #include "f_spear.h"
 #endif
 
+
 typedef uint8_t byte;
 typedef uint16_t word;
 typedef int32_t fixed;
 typedef uint32_t longword;
-// Win32
-#ifndef _WIN32
 typedef int8_t boolean;
-#endif
 typedef void * memptr;
+
 
 typedef struct
 {
@@ -857,6 +860,7 @@ typedef enum
 } exit_t;
 
 
+
 extern word *mapsegs[MAPPLANES];
 extern int mapon;
 
@@ -1346,27 +1350,6 @@ static inline fixed FixedMul(fixed a, fixed b)
 #define ISPOINTER(x) ((((uintptr_t)(x)) & ~0xffff) != 0)
 
 #define CHECKMALLOCRESULT(x) if(!(x)) Quit("Out of memory at %s:%i", __FILE__, __LINE__)
-
-// Mingw32 includes these definitions in string.h
-#ifndef __MINGW32__
-#ifdef _WIN32
-    #define strcasecmp stricmp
-    #define strncasecmp strnicmp
-    #define snprintf _snprintf
-#else
-    static inline char* itoa(int value, char* string, int radix)
-    {
-        sprintf(string, "%d", value);
-        return string;
-    }
-
-    static inline char* ltoa(long value, char* string, int radix)
-    {
-        sprintf(string, "%ld", value);
-        return string;
-    }
-#endif
-#endif
 
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
 #define endof(x)    ((x) + lengthof(x))

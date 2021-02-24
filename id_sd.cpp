@@ -28,13 +28,7 @@
 //
 
 #include "wl_def.h"
-#ifdef _WIN32
 #include "SDL_mixer.h"
-#elif __linux__
-#include <SDL/SDL_mixer.h>
-#else
-#include <SDL/SDL_mixer.h>
-#endif
 #include "fmopl.h"
 
 #pragma hdrstop
@@ -1115,6 +1109,8 @@ SD_Shutdown(void)
     }
 
     free(DigiList);
+
+    Mix_Quit();
 
     SD_Started = false;
 }

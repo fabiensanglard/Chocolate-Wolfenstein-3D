@@ -5,6 +5,8 @@
 //  By Jason Blochowiak
 //
 
+#include <unordered_map>
+
 #ifndef __ID_IN__
 #define __ID_IN__
 
@@ -13,10 +15,8 @@
 #endif
 
 typedef int     ScanCode;
-#define sc_None         0
-#define sc_Bad          0xff
+#define sc_None         SDLK_UNKNOWN
 #define sc_Return       SDLK_RETURN
-#define sc_Enter        sc_Return
 #define sc_Escape       SDLK_ESCAPE
 #define sc_Space        SDLK_SPACE
 #define sc_BackSpace    SDLK_BACKSPACE
@@ -49,8 +49,9 @@ typedef int     ScanCode;
 #define sc_F11          SDLK_F11
 #define sc_F12          SDLK_F12
 
-#define sc_ScrollLock       SDLK_SCROLLOCK
-#define sc_PrintScreen      SDLK_PRINT
+#define sc_ScrollLock       SDLK_SCROLLLOCK
+#define sc_PrintScreen      SDLK_PRINTSCREEN
+#define sc_Pause            SDLK_PAUSE
 
 #define sc_1            SDLK_1
 #define sc_2            SDLK_2
@@ -136,7 +137,8 @@ typedef struct      {
                                     joyMultXH,joyMultYH;
                     } JoystickDef;
 // Global variables
-extern  volatile boolean    Keyboard[];;
+extern  std::unordered_map<int, boolean>    Keyboard;
+//I do not see multiple threads reading this
 extern           boolean    MousePresent;
 extern  volatile boolean    Paused;
 extern  volatile char       LastASCII;
@@ -177,6 +179,5 @@ void    IN_GetJoyFineDelta(int *dx, int *dy);
 void    IN_StartAck(void);
 boolean IN_CheckAck (void);
 bool    IN_IsInputGrabbed();
-void    IN_CenterMouse();
 
 #endif

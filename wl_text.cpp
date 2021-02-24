@@ -690,7 +690,7 @@ void ShowArticle (char *article)
                         dir = dir_North;
                         break;
 
-                    case sc_Enter:
+                    case sc_Return:
                     case sc_DownArrow:
                     case sc_PgDn:
                     case sc_RightArrow:
@@ -820,8 +820,6 @@ void EndText (void)
 
     SETFONTCOLOR(0,15);
     IN_ClearKeysDown();
-    if (MousePresent && IN_IsInputGrabbed())
-        IN_CenterMouse();  // Clear accumulated mouse movement
 
     FreeMusic ();
 #else
@@ -850,8 +848,6 @@ void EndText (void)
     VW_FadeOut();
     SETFONTCOLOR(0,15);
     IN_ClearKeysDown();
-    if (MousePresent && IN_IsInputGrabbed())
-        IN_CenterMouse();  // Clear accumulated mouse movement
 
     FreeMusic ();
 #endif
